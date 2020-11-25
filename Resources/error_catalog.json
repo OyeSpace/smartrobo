@@ -1,0 +1,29 @@
+﻿{
+  "general": {
+    "errors": [
+      {
+        "key": "INVALID_API_KEY",
+        "code": 2001,
+        "message": "Invalid API Key"
+      }
+    ]
+  },
+  "account": {
+    "errors": [
+      {
+        "key": "INVALID_MOBILE_NUMBER",
+        "code": 3001,
+        "message": "Invalid Mobile Number"
+      }
+    ]
+  },
+  "association": {
+    "errors": [
+      {
+        "key": "INVALID_ASSOC_NAME",
+        "code": 4001,
+        "message": "Invalid Association Name"
+      }
+    ]
+  }
+}

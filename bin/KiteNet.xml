@@ -1,0 +1,4909 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+KiteNet
+</name>
+</assembly>
+<members>
+<member name="M:KiteNet.Bridge.TestConnection">
+	<summary>
+ Tests Bridge connection
+ </summary>
+	<returns>true if connected else false</returns>
+	<remarks>Timeout: 5seconds</remarks>
+</member><member name="M:KiteNet.Bridge.SubscribeQuotes(System.String,System.String)">
+	<summary>
+ Subscribes for websocket quotes
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>true if subscribed else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.UnSubscribeQuotes(System.String,System.String)">
+	<summary>
+ UnSubscribes from webscoket quotes
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>true if unsubscribed else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetLotSize(System.String,System.String)">
+	<summary>
+ Get's Lot Size
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Lot Size</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetTickSize(System.String,System.String)">
+	<summary>
+ Get's Tick Size
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Tick Size</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetStrike(System.String,System.String)">
+	<summary>
+ Get's Strike Price
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Strike</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetExpiry(System.String,System.String)">
+	<summary>
+ Get's expiry
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Expiry</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetISIN(System.String,System.String)">
+	<summary>
+ Get's ISIN
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>ISIN</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetExchToken(System.String,System.String)">
+	<summary>
+ Get's Exch Token
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Exch Token</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetInstToken(System.String,System.String)">
+	<summary>
+ Get's InstToken
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Token</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetSegment(System.String,System.String)">
+	<summary>
+ Get's segment
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Segment</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetMWSymbols">
+	<summary>
+ Get's Market Watch Symbols
+ </summary>
+	<returns>Symbols list as csv</returns>
+	<remarks>Example: AXISBANK.NSE,ACC.NSE</remarks>
+</member><member name="M:KiteNet.Bridge.GetConnectedClient">
+	<summary>
+ Get's Id of connected client
+ </summary>
+	<returns>Client Id</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetExch(System.String)">
+	<summary>
+ Get's Exch
+ </summary>
+	<param name="InstToken">Inst Token </param>
+	<returns>Exchange</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetTrdSym(System.String)">
+	<summary>
+ Get's Trade Symbol
+ </summary>
+	<param name="InstToken">Inst Token</param>
+	<returns>Trade Symbol</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.Logout">
+	<summary>
+ Logouts the user
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/> 'ToDo Your Other Calls
+ <br/> 'Catch
+ <br/>Kite.Logout()
+ <br/>'Cleanup
+ <br/> Kite = Nothing 'Terminate the Kite Instance thus releasing all resources held by Kite Instance
+ <br/>
+	</example>
+	<returns>True or False</returns>
+	<remarks>Initiate a new Kite Instance for Login Again</remarks>
+</member><member name="T:KiteNet.Bridge">
+	<summary>
+ Bridge for Kite Connect API
+ </summary>
+	<remarks>
+ You must registered KiteNet.dll in the system to use this Bridge.
+ <br/>
+		<br/>How this bridge differs from the Kite class of KiteNet?
+ <br/>Kite is the main class and it's a wrapper for Kite REST API.
+ <br/>Only the Kite class will have direct communication with the Kite API server and receive response.
+ <br/>You can think Kite class of as a Trading Platform.
+ <br/>This Bridge is a derived class of Kite class and communicate to Kite class only.   
+ <br/>Without Kite class, this Bridge is of no use.
+ <br/>In order to use this Bridge class, an application with Kite class should be running, Kite class should have initialized and the user has properly logged-in.
+ <br/>An example for such applicaton is our sample excel workbook, the sample excel workbook is as good as your trading platform and can receive request from Bridge class.
+ <br/>
+		<br/>What is the targeted use of Bridge class?
+ <br/>AmiBroker, Excel and any COM supported application.
+ <br/>
+		<br/>Features of Bridge class
+ <br/>Support for Buy/Sell/Short/Cover.
+ <br/>Multiple order firing restriction at application level.
+ <br/>Positions manipulation.
+ <br/>Run multiple strategies and get position details seperately.
+ <br/>Paper trading support. You can test your strategies without actually trading.
+ <br/>This paper trading is as good as real time trade.
+ <br/>
+		<br/>Connection Timeout: 5 seconds.
+ </remarks>
+	<example>
+		<br/>_SECTION_BEGIN("Bridge");
+ <br/>SetChartOptions(0,chartShowArrows|chartShowDates);
+ <br/>Plot( C, "Close",  colorDefault ,styleCandle); 
+ <br/>
+		<br/>/*API Doc at https://howutrade.in/docs/kitenet/Bridge*/
+ <br/>/*Please go through API doc thoroughly AND pay special attention to remarks section*/
+ <br/>/*API doc will list out all the methods supported by the Bridge AND their parameters*/
+ <br/>/*Make Sure You Registered KiteNet.dll in the system else download from https://howutrade.in*/
+ <br/>
+		<br/>/*Symbol Details*/
+ <br/>Exch = "NSE";
+ <br/>TrdSym = "AXISBANK";
+ <br/>Qty = 10;  /*Number of Lots OR Shares*/
+ <br/>OrdType = "MARKET";
+ <br/>ProdType = "MIS";
+ <br/>Val = "DAY";
+ <br/>CTag = "LONGENTRY"; /*A Unique Tag to Identify this Order.*/
+ <br/>IsLive = True; /*True means Place Order in Live. default is True*/
+ <br/>StgyCode = "A1"; /*Two Characters String. Say A1 identifies Supertrend Strategy. A2 refers MA Strategy*/
+ <br/>
+		<br/>/*Note
+ <br/>for Optional Parameters, You may leave Blank
+ <br/>OR Put 0 if it is a Number Parameter
+ <br/>Put StringEmpty if it is a String Parameter*/
+ <br/>
+		<br/>
+		<br/>/*Sample Trading System*/
+ <br/>Buy = Cross(MA(C,30),MA(C,15));
+ <br/>Sell = Cross(MA(C,15),MA(C,30));
+ <br/>
+		<br/>Buy = ExRem(Buy,Sell);
+ <br/>Sell = ExRem(Sell,Buy);
+ <br/>
+		<br/>PlotShapes(IIf(Buy, shapeHollowUpArrow, shapeNone),colorGreen, 0,L, Offset=-30); 
+ <br/>PlotShapes(IIf(Sell, shapeHollowDownArrow, shapeNone),colorRed, 0,H, Offset=-30);
+ <br/>
+		<br/>/*Bridge Code*/
+ <br/>if (LastValue(Buy)) 
+ <br/>{Bridge = CreateStaticObject("KiteNet.Bridge");
+ <br/>Bridge.PlaceRegularOrderBridge(Exch, TrdSym, "BUY", OrdType, Qty, ProdType, 0, 0, Val, CTag, 0, IsLive, StgyCode);}
+ <br/>
+		<br/>if (LastValue(Sell)) 
+ <br/>{Bridge = CreateStaticObject("KiteNet.Bridge");
+ <br/>Bridge.PlaceRegularOrderBridge(Exch, TrdSym, "SELL", OrdType, Qty, ProdType, 0, 0, Val, CTag, 0, IsLive, StgyCode);} 
+ <br/>
+		<br/>_SECTION_END();
+ </example>
+</member><member name="M:KiteNet.Kite.GetMasterContract">
+	<summary>
+ Downloads Symbols for all exchanges enabled for user
+ </summary>
+	<returns>True or False</returns>
+	<remarks>
+ Starts a background thread to download symbols and returns immediately.
+ <br/>Symbols are downloaded from API server only once in a day on first login. Hence first login of the day may take time.
+ <br/>Subsequent logins will be fast as symbols are loaded from saved files.
+ <br/>You need to wait for the downloads to finish before making any call
+ <br/>You can check the download status from Symbol_Download_Status property. 
+ </remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.InstToken">
+	<summary>
+ Get's the Inst token
+ </summary>
+	<value>Inst token</value>
+	<returns>Inst token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.Exch">
+	<summary>
+ Get's the exchange
+ </summary>
+	<value>exchange</value>
+	<returns>exchange</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.TrdSym">
+	<summary>
+ Get's the trade_symbol
+ </summary>
+	<value>trade_symbol</value>
+	<returns>trade_symbol</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.AvgBoughtPrice">
+	<summary>
+ Get's the AvgBoughtPrice
+ </summary>
+	<value>AvgBoughtPrice</value>
+	<returns>AvgBoughtPrice</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.AvgSoldPrice">
+	<summary>
+ Get's the AvgSoldPrice
+ </summary>
+	<value>AvgSoldPrice</value>
+	<returns>AvgSoldPrice</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.BoughtQty">
+	<summary>
+ Get's the BoughtQty
+ </summary>
+	<value>BoughtQty</value>
+	<returns>BoughtQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.SoldQty">
+	<summary>
+ Get's the SoldQty
+ </summary>
+	<value>SoldQty</value>
+	<returns>SoldQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.MTM">
+	<summary>
+ Get's the MTM
+ </summary>
+	<value>MTM</value>
+	<returns>MTM</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.NetQty">
+	<summary>
+ Get's the NetQty
+ </summary>
+	<value>NetQty</value>
+	<returns>NetQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.Ltp">
+	<summary>
+ Get's the Ltp
+ </summary>
+	<value>Ltp</value>
+	<returns>Ltp</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.Bid">
+	<summary>
+ Get's the BestBid
+ </summary>
+	<value>Bid</value>
+	<returns>Bid</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.MtmUpdateEventArgs.Ask">
+	<summary>
+ Get's the BestAsk
+ </summary>
+	<value>Ask</value>
+	<returns>Ask</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.MtmUpdateEventArgs.#ctor(System.String,System.String,System.String,System.Double,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Double,System.Double,System.Double)">
+	<summary>
+ Initializes a new instance of the MtmUpdateEventArgs class with MTM details.
+ </summary>
+	<param name="sExch">Exch</param>
+	<param name="sInstToken">Inst Token</param>
+	<param name="sTrdSym">Trade Symbol</param>
+	<param name="dAvgBoughtPrice">Avg Bought Price</param>
+	<param name="dAvgSoldPrice">Avg Sold Price</param>
+	<param name="iBoughtQty">Bought Qty</param>
+	<param name="iSoldQty">Sold Qty</param>
+	<param name="dMTM">Net PL</param>
+	<param name="iNetQty">Net Qty</param>
+	<param name="dLtp">Ltp</param>
+	<param name="dBid">Bid</param>
+	<param name="dAsk">Ask</param>
+	<remarks>None</remarks>
+</member><member name="T:KiteNet.MtmUpdateEventArgs">
+	<summary>
+ Event arguments for the MtmUpdateEvent.
+ </summary>
+	<remarks>
+ API server does not stream MTM details in websocket. This data is internally calculated by KiteNet Library using the order details received through websocket/order book.
+ </remarks>
+</member><member name="M:KiteNet.Kite.PlaceAmo(System.String,System.String,System.String,System.String,System.Int32,System.String,System.Double,System.Double,System.String,System.String,System.Int32,System.String)">
+	<summary>
+ Places a after market order
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Trans">BUY or SELL</param>
+	<param name="OrdType">MARKET or LIMIT or SL or SL-M</param>
+	<param name="Qty">Quantity</param>
+	<param name="ProdType">CNC or MIS OR NRML</param>
+	<param name="DiscQty">DiscQty</param>
+	<param name="CTag">Custom Tag</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="Validity">DAY or IOC</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+ String parameters are case-insensitive.
+ <br/>Custom Tag should be unique, alphanumeric and 3-20 chracters long.
+ <br/>Custom tag is assigned and manupulated locally by KiteNet.
+ <br/>Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ <br/>Prices are automatically rounded to tick size by KiteNet.
+ <br/>Exchange and Trade Symbol should exactly match with Master Contract.
+ <br/>Validity, Product and Order Type should match exactly as per API documenation.
+ <br/>Call this function Try...Catch...End Try block to catch exceptions.
+ </remarks>
+</member><member name="M:KiteNet.Kite.CancelAmo(System.String)">
+	<summary>
+ Cancels a after market order
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Status</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.PlaceCO(System.String,System.String,System.String,System.Int32,System.Double,System.String,System.Double,System.String,System.String)">
+	<summary>
+ Places a cover order
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Trans">BUY or SELL</param>
+	<param name="Qty">Quantity</param>
+	<param name="StoplossPrice">Stoploss Price</param>
+	<param name="CTag">Custom Tag</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="OrdType"> MARKET or LIMIT</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+ String parameters are case-insensitive.
+ <br/>Custom Tag should be unique, alphanumeric and 3-20 chracters long.
+ <br/>Custom tag is assigned and manupulated locally by KiteNet.
+ <br/>Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ <br/>Prices are automatically rounded to tick size by KiteNet.
+ <br/>Exchange and Trade Symbol should exactly match with Master Contract.
+ <br/>Validity, Product and Order Type should match exactly as per API documenation.
+ <br/>Call this function Try...Catch...End Try block to catch exceptions.
+ </remarks>
+</member><member name="M:KiteNet.Kite.ExitCO(System.String)">
+	<summary>
+ Exits a cover order position
+ </summary>
+	<param name="OrderIdStoploss">OrderId of CO Stoploss</param>
+	<returns>Status</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.ModifyCOSl(System.String,System.Double)">
+	<summary>
+ Modifies trigger price of a CO stoploss order
+ </summary>
+	<param name="OrderIdStoploss">OrderId of CO Stoploss</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<returns>Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.CancelCOMain(System.String)">
+	<summary>
+ Cancels a open CO entry order
+ </summary>
+	<param name="OrderIdEntry">Order Id of CO Entry</param>
+	<returns>Status</returns>
+	<remarks> None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Mode">
+	<summary>
+ Get's the Mode
+ </summary>
+	<value>Mode</value>
+	<returns>Returns value from 1 - 4 indicating under which mode the event is triggered</returns>
+	<remarks>
+ You need to check the mode property and handle data accordingly. 
+ <br/>Example: In Ltp mode, the Ltp property will have data and rest will have default value i.e. 0 or DateTime.DefaultValue
+ <br/>Mode and Data
+ <br/>1 (LTP) - LUT,InstToken,Exch,TrdSym,LTP
+ <br/>2 (OHLC) - LUT,InstToken,Exch,TrdSym,LTP,Open,High,Low,Close
+ <br/>3 (FULL) - All Properties
+ <br/>4 (INDEX) - LUT,InstToken,Exch,TrdSym,LTP,Open,High,Low,Close,YearlyHigh,YearlyLow
+ <br/>
+		<br/>Note: Some properties are currently not supported by API and reserved for future use.
+ </remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.LUT">
+	<summary>
+ Get's the Last Update Time
+ </summary>
+	<value>LUT</value>
+	<returns>Last Update Time</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.InstToken">
+	<summary>
+ Get's the Inst token
+ </summary>
+	<value>Inst token</value>
+	<returns>Inst token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Exch">
+	<summary>
+ Get's the exchange
+ </summary>
+	<value>exchange</value>
+	<returns>exchange</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.TrdSym">
+	<summary>
+ Get's the trade_symbol
+ </summary>
+	<value>trade_symbol</value>
+	<returns>trade_symbol</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.LTP">
+	<summary>
+ Get's the LTP
+ </summary>
+	<value>LTP</value>
+	<returns>LTP</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.LTQ">
+	<summary>
+ Get's the LTQ
+ </summary>
+	<value>LTQ</value>
+	<returns>LTQ</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.ATP">
+	<summary>
+ Get's the ATP
+ </summary>
+	<value>ATP</value>
+	<returns>ATP</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Volume">
+	<summary>
+ Get's the volume
+ </summary>
+	<value>volume</value>
+	<returns>volume</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.TotalBuyQty">
+	<summary>
+ Get's the total_buy_qty
+ </summary>
+	<value>total_buy_qty</value>
+	<returns>total_buy_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.TotalSellQty">
+	<summary>
+ Get's the total_sell_qty
+ </summary>
+	<value>total_sell_qty</value>
+	<returns>total_sell_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Open">
+	<summary>
+ Get's the open_price
+ </summary>
+	<value>open_price</value>
+	<returns>open_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.High">
+	<summary>
+ Get's the high_price
+ </summary>
+	<value>high_price</value>
+	<returns>high_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Low">
+	<summary>
+ Get's the low_price
+ </summary>
+	<value>low_price</value>
+	<returns>low_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Close">
+	<summary>
+ Get's the Previous day close_price
+ </summary>
+	<value>close_price</value>
+	<returns>close_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidQty1">
+	<summary>
+ Get's the bid_qty
+ </summary>
+	<value>bid_qty</value>
+	<returns>bid_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidPrice1">
+	<summary>
+ Get's the bid_price
+ </summary>
+	<value>bid_price</value>
+	<returns>bid_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidOrders1">
+	<summary>
+ Get's the bid_orders
+ </summary>
+	<value>bid_orders</value>
+	<returns>bid_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidQty2">
+	<summary>
+ Get's the bid_qty
+ </summary>
+	<value>bid_qty</value>
+	<returns>bid_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidPrice2">
+	<summary>
+ Get's the bid_price
+ </summary>
+	<value>bid_price</value>
+	<returns>bid_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidOrders2">
+	<summary>
+ Get's the bid_orders
+ </summary>
+	<value>bid_orders</value>
+	<returns>bid_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidQty3">
+	<summary>
+ Get's the bid_qty
+ </summary>
+	<value>bid_qty</value>
+	<returns>bid_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidPrice3">
+	<summary>
+ Get's the bid_price
+ </summary>
+	<value>bid_price</value>
+	<returns>bid_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidOrders3">
+	<summary>
+ Get's the bid_orders
+ </summary>
+	<value>bid_orders</value>
+	<returns>bid_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidQty4">
+	<summary>
+ Get's the bid_qty
+ </summary>
+	<value>bid_qty</value>
+	<returns>bid_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidPrice4">
+	<summary>
+ Get's the bid_price
+ </summary>
+	<value>bid_price</value>
+	<returns>bid_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidOrders4">
+	<summary>
+ Get's the bid_orders
+ </summary>
+	<value>bid_orders</value>
+	<returns>bid_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidQty5">
+	<summary>
+ Get's the bid_qty
+ </summary>
+	<value>bid_qty</value>
+	<returns>bid_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidPrice5">
+	<summary>
+ Get's the bid_price
+ </summary>
+	<value>bid_price</value>
+	<returns>bid_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.BidOrders5">
+	<summary>
+ Get's the bid_orders
+ </summary>
+	<value>bid_orders</value>
+	<returns>bid_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskQty1">
+	<summary>
+ Get's the ask_qty
+ </summary>
+	<value>ask_qty</value>
+	<returns>ask_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskPrice1">
+	<summary>
+ Get's the ask_price
+ </summary>
+	<value>ask_price</value>
+	<returns>ask_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskOrders1">
+	<summary>
+ Get's the ask_orders
+ </summary>
+	<value>ask_orders</value>
+	<returns>ask_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskQty2">
+	<summary>
+ Get's the ask_qty
+ </summary>
+	<value>ask_qty</value>
+	<returns>ask_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskPrice2">
+	<summary>
+ Get's the ask_price
+ </summary>
+	<value>ask_price</value>
+	<returns>ask_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskOrders2">
+	<summary>
+ Get's the ask_orders
+ </summary>
+	<value>ask_orders</value>
+	<returns>ask_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskQty3">
+	<summary>
+ Get's the ask_qty
+ </summary>
+	<value>ask_qty</value>
+	<returns>ask_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskPrice3">
+	<summary>
+ Get's the ask_price
+ </summary>
+	<value>ask_price</value>
+	<returns>ask_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskOrders3">
+	<summary>
+ Get's the ask_orders
+ </summary>
+	<value>ask_orders</value>
+	<returns>ask_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskQty4">
+	<summary>
+ Get's the ask_qty
+ </summary>
+	<value>ask_qty</value>
+	<returns>ask_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskPrice4">
+	<summary>
+ Get's the ask_price
+ </summary>
+	<value>ask_price</value>
+	<returns>ask_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskOrders4">
+	<summary>
+ Get's the ask_orders
+ </summary>
+	<value>ask_orders</value>
+	<returns>ask_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskQty5">
+	<summary>
+ Get's the ask_qty
+ </summary>
+	<value>ask_qty</value>
+	<returns>ask_qty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskPrice5">
+	<summary>
+ Get's the ask_price
+ </summary>
+	<value>ask_price</value>
+	<returns>ask_price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.AskOrders5">
+	<summary>
+ Get's the ask_orders
+ </summary>
+	<value>ask_orders</value>
+	<returns>ask_orders</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.LTT">
+	<summary>
+ Get's the Last Traded Time
+ </summary>
+	<value>LTT</value>
+	<returns>LTT</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.Spot">
+	<summary>
+ Get's the Spot Price
+ </summary>
+	<value>Spot Price</value>
+	<returns>Spot Price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.OI">
+	<summary>
+ Get's the OpenIntrest
+ </summary>
+	<value>OpenIntrest</value>
+	<returns>OpenIntrest</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.OIHigh">
+	<summary>
+ Get's the OI High
+ </summary>
+	<value>OI High</value>
+	<returns>OpenIntrest High</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.OILow">
+	<summary>
+ Get's the OI Low
+ </summary>
+	<value>OI Low</value>
+	<returns>OpenIntrest Low</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.OINetChg">
+	<summary>
+ Get's the OI NetChg
+ </summary>
+	<value>OI NetChg</value>
+	<returns>OpenIntrest NetChg</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.OIPctChg">
+	<summary>
+ Get's the OI PctChg
+ </summary>
+	<value>OI PctChg</value>
+	<returns>OpenIntrest PctChg</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.LowerCircuit">
+	<summary>
+ Get's the LowerCircuit
+ </summary>
+	<value>LowerCircuit</value>
+	<returns>LowerCircuit</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.UpperCircuit">
+	<summary>
+ Get's the UpperCircuit
+ </summary>
+	<value>UpperCircuit</value>
+	<returns>UpperCircuit</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.YearlyHigh">
+	<summary>
+ Get's the YearlyHigh
+ </summary>
+	<value>YearlyHigh</value>
+	<returns>YearlyHigh</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.QuotesReceivedEventArgs.YearlyLow">
+	<summary>
+ Get's the YearlyLow
+ </summary>
+	<value>YearlyLow</value>
+	<returns>YearlyLow</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.QuotesReceivedEventArgs.#ctor(System.Int32,System.DateTime,System.String,System.String,System.String,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Double,System.Int32,System.Int32,System.Int32,System.Double,System.Int32,System.Double,System.Double,System.Double,System.Double,System.DateTime,System.Int32,System.Int32,System.Int32,System.Double,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Int32,System.Double,System.Int32)">
+	<summary>
+ Initializes a new instance of the QuotesReceivedEventArgs class with Quote details.
+ </summary>
+	<param name="iMode">Mode</param>
+	<param name="dtLUT">LUT</param>
+	<param name="sInstToken">Inst Token</param>
+	<param name="sExch">Exch</param>
+	<param name="sTrdSym">TrdSym</param>
+	<param name="dLTP">Ltp</param>
+	<param name="dOpen">Open</param>
+	<param name="dHigh">High</param>
+	<param name="dLow">Low</param>
+	<param name="dClose">Close</param>
+	<param name="iLTQ">Ltq</param>
+	<param name="dATP">Atp</param>
+	<param name="iVolume">Volume</param>
+	<param name="iTotalBuyQty">TotalBuyQty</param>
+	<param name="iTotalSellQty">TotalSellQty</param>
+	<param name="dSpot">Spot</param>
+	<param name="iOI">OpenIntrest</param>
+	<param name="dLowerCircuit">LowerCircuit</param>
+	<param name="dUpperCircuit">UpperCircuit</param>
+	<param name="dYearlyHigh">YearlyHigh</param>
+	<param name="dYearlyLow">YearlyLow</param>
+	<param name="dtLTT">LTT</param>
+	<param name="iOIHigh">OpenIntrest High</param>
+	<param name="iOILow">OpenIntrest Low</param>
+	<param name="iOINetChg">OpenIntrest NetChg</param>
+	<param name="iOIPctChg">OpenIntrest PctChg</param>
+	<param name="iBidQty1">BidQty1</param>
+	<param name="dBidPrice1">BidPrice1</param>
+	<param name="iBidOrders1">BidOrders1</param>
+	<param name="iBidQty2">BidQty2</param>
+	<param name="dBidPrice2">BidPrice2</param>
+	<param name="iBidOrders2">BidOrders2</param>
+	<param name="iBidQty3">BidQty3</param>
+	<param name="dBidPrice3">BidPrice3</param>
+	<param name="iBidOrders3">BidOrders3</param>
+	<param name="iBidQty4">BidQty4</param>
+	<param name="dBidPrice4">BidPrice4</param>
+	<param name="iBidOrders4">BidOrders4</param>
+	<param name="iBidQty5">BidQty5</param>
+	<param name="dBidPrice5">BidPrice5</param>
+	<param name="iBidOrders5">BidOrders5</param>
+	<param name="iAskQty1">AskQty1</param>
+	<param name="dAskPrice1">AskPrice1</param>
+	<param name="iAskOrders1">AskOrders1</param>
+	<param name="iAskQty2">AskQty2</param>
+	<param name="dAskPrice2">AskPrice2</param>
+	<param name="iAskOrders2">AskOrders2</param>
+	<param name="iAskQty3">AskQty3</param>
+	<param name="dAskPrice3">AskPrice3</param>
+	<param name="iAskOrders3">AskOrders3</param>
+	<param name="iAskQty4">AskQty4</param>
+	<param name="dAskPrice4">AskPrice4</param>
+	<param name="iAskOrders4">AskOrders4</param>
+	<param name="iAskQty5">AskQty5</param>
+	<param name="dAskPrice5">AskPrice5</param>
+	<param name="iAskOrders5">AskOrders5</param>
+	<remarks></remarks>
+</member><member name="T:KiteNet.QuotesReceivedEventArgs">
+	<summary>
+ Event arguments for the QuotesReceivedEvent.
+ </summary>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.ExchToken">
+	<summary>
+ Get's the Exch token
+ </summary>
+	<value>Exch token</value>
+	<returns>Exch token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.Exch">
+	<summary>
+ Get's the exchange
+ </summary>
+	<value>exchange</value>
+	<returns>exchange</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TrdSym">
+	<summary>
+ Get's the trade_symbol
+ </summary>
+	<value>trade_symbol</value>
+	<returns>trade_symbol</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.Product">
+	<summary>
+ Get's the Product
+ </summary>
+	<value>Product</value>
+	<returns>Product</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.OrderType">
+	<summary>
+ Get's the OrderType
+ </summary>
+	<value>OrderType</value>
+	<returns>OrderType</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TransType">
+	<summary>
+ Get's the Transaction Type
+ </summary>
+	<value>Transaction Type</value>
+	<returns>Transaction Type</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TradedPrice">
+	<summary>
+ Get's the Traded Price
+ </summary>
+	<value>Traded Price</value>
+	<returns>Traded Price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TradedQty">
+	<summary>
+ Get's the Traded Quantity
+ </summary>
+	<value>Traded Quantity</value>
+	<returns>Traded Quantity</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.ExchId">
+	<summary>
+ Get's the Exchange Order Id
+ </summary>
+	<value>Exchange Order Id</value>
+	<returns>Exchange Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TradeId">
+	<summary>
+ Get's the Trade Id
+ </summary>
+	<value>Trade Id</value>
+	<returns>Trade Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.OrderId">
+	<summary>
+ Get's the Order Id
+ </summary>
+	<value>Order Id</value>
+	<returns>Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.ExchTime">
+	<summary>
+ Get's the Exch Time
+ </summary>
+	<value>Exch Time</value>
+	<returns>Exch Time</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.TimeStamp">
+	<summary>
+ Get's the Timestamp
+ </summary>
+	<value>Timestamp</value>
+	<returns>Timestamp</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.TradeUpdateEventArgs.InstToken">
+	<summary>
+ Get's the Inst token
+ </summary>
+	<value>Inst token</value>
+	<returns>Inst token</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.TradeUpdateEventArgs.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.Double,System.String,System.String)">
+	<summary>
+ Initializes a new instance of the TradeUpdateEventArgs class with Trade details.
+ </summary>
+	<param name="sExch">Exch</param>
+	<param name="sExchToken">Exch Token</param>
+	<param name="sTrdSym">TrdSym</param>
+	<param name="sProduct">Product</param>
+	<param name="sOrderType">OrderType</param>
+	<param name="sTrans">Trans</param>
+	<param name="iTradedQty">TradedQty</param>
+	<param name="sExchId">ExchId</param>
+	<param name="sOrderId">OrderId</param>
+	<param name="sExchTime">ExchTime</param>
+	<param name="sTimeStamp">TimeStamp</param>
+	<param name="dTradedPrice">TradedPrice</param>
+	<param name="sTradeId">TradeId</param>
+	<param name="sInstToken">Inst Token</param>
+	<remarks></remarks>
+</member><member name="T:KiteNet.TradeUpdateEventArgs">
+	<summary>
+ Event arguments for the TradeUpdateEvent.
+ </summary>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.ReSubscribeQuotesAll">
+	<summary>
+ ReSubscribes quotes for all symbols in the market watch.
+ </summary>
+	<returns>true if resubscribed all successfully; otherwise false</returns>
+	<remarks>This call is equivalent to UnSubscribeQuotesAll + SubscribeQuotesAll</remarks>
+</member><member name="M:KiteNet.Kite.SubscribeQuotesAll">
+	<summary>
+ Subscribes quotes for all symbols in the market watch.
+ </summary>
+	<returns>true if subscribed all successfully; otherwise false</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.UnSubscribeQuotesAll">
+	<summary>
+ UnSubscribes quotes for all symbols in market watch
+ </summary>
+	<returns>true if unsubscribed all successfully; otherwise false</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.SubscribeQuotes(System.String,System.String)">
+	<summary>
+ Subscribes quotes for the given symbol
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>true if subscribed successfully; otherwise false</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.UnSubscribeQuotes(System.String,System.String)">
+	<summary>
+ UnSubscribes quotes for the given symbol
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>true if unsubscribed successfully; otherwise false</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.StartWebSocket">
+	<summary>
+ Starts WebSocket for Streaming Quotes
+ </summary>
+	<returns>true if websocket started successfully; otherwise false</returns>
+	<remarks>
+ Note Websocket automatically started after GetMasterContract Call and will reconnect automatically if network is lost
+ <br/>Call only if automatic reconnection fails.
+ </remarks>
+</member><member name="M:KiteNet.Kite.StopWebSocket">
+	<summary>
+ Stops WebSocket from Streaming Quotes
+ </summary>
+	<returns>true if websocket stopped successfully; otherwise false</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Bridge.GetLTT(System.String,System.String)">
+	<summary>
+ Get's LTT for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LTT</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLUT(System.String,System.String)">
+	<summary>
+ Get's LUT for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LUT</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetUpperCircuit(System.String,System.String)">
+	<summary>
+ Get's Upper Circuit for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Upper Circuit</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLowerCircuit(System.String,System.String)">
+	<summary>
+ Get's Lower Circuit for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Lower Circuit</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBestAskQty(System.String,System.String)">
+	<summary>
+ Get's Best Ask Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Ask Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBestBidQty(System.String,System.String)">
+	<summary>
+ Get's Best Bid Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Bid Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLTQ(System.String,System.String)">
+	<summary>
+ Get's LTQ for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LTQ</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalMtm(System.String)">
+	<summary>
+ Get's the total MTM of the given exchange.
+ </summary>
+	<param name="Exch">Exch</param>
+	<returns>Total MTM</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetMtmProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's MTM for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>MTM</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgBoughtPriceProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Avg Bought Price for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Avg Bought Price</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgSoldPriceProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Avg Sold Price for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Avg Sold Price</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetNetQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Net Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Net Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBoughtQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Bought Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Bought Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetSoldQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Sold Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Sold Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetMtm(System.String,System.String)">
+	<summary>
+ Get's MTM for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>MTM</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgBoughtPrice(System.String,System.String)">
+	<summary>
+ Get's Avg Bought Price for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Avg Bought Price</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgSoldPrice(System.String,System.String)">
+	<summary>
+ Get's Avg Sold Price for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Avg Sold Price</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetNetQty(System.String,System.String)">
+	<summary>
+ Get's Net Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Net Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBoughtQty(System.String,System.String)">
+	<summary>
+ Get's Bought Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Bought Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetSoldQty(System.String,System.String)">
+	<summary>
+ Get's Sold Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Sold Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalSellQty(System.String,System.String)">
+	<summary>
+ Get's Total Sell Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Total Sell Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalBuyQty(System.String,System.String)">
+	<summary>
+ Get's Total Buy Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Total Buy Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOpenInt(System.String,System.String)">
+	<summary>
+ Get's Open Int for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOIHigh(System.String,System.String)">
+	<summary>
+ Get's OI High for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>OI High</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOILow(System.String,System.String)">
+	<summary>
+ Get's OI Low for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>OI Low</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOINetChg(System.String,System.String)">
+	<summary>
+ Get's OI Net Chg for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>OI Net Chg</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOIPctChg(System.String,System.String)">
+	<summary>
+ Get's OI Pct Chg for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>OI Pct Chg</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetVolume(System.String,System.String)">
+	<summary>
+ Get's Volume for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Volume</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBestAsk(System.String,System.String)">
+	<summary>
+ Get's Best Ask for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Ask</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetBestBid(System.String,System.String)">
+	<summary>
+ Get's Best Bid for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Bid</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetAtp(System.String,System.String)">
+	<summary>
+ Get's ATP for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>ATP</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetClose(System.String,System.String)">
+	<summary>
+ Get's Close for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Close (Prv Day)</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLow(System.String,System.String)">
+	<summary>
+ Get's Low for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Low</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetHigh(System.String,System.String)">
+	<summary>
+ Get's High for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>High</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOpen(System.String,System.String)">
+	<summary>
+ Get's Open for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLtp(System.String,System.String)">
+	<summary>
+ Get's Ltp for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Ltp</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.GetHistData(System.String,System.String,System.String,System.DateTime,System.DateTime,System.Boolean,System.String)">
+	<summary>
+ Gets the Historical data
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Interval">minute| 3minute | 5minute | 10minute | 15minute | 30minute | 60minute | day</param>
+	<param name="FromDate">Date from which data required</param>
+	<param name="ToDate">Date upto data required</param>
+	<param name="IsSplitDateTime">If True, Date and Time will be Split else combined. Default is True</param>
+	<param name="SaveFormat">txt or csv</param>
+	<returns>Array of String containing Historical data.Each Element represents single D,O,H,L,C,V data seperated by comma
+ <br/>You should loop through the array and split elements by comma to get required field
+ <br/>{"01-Jan-2016 13:30:00,1392.95,1393,1392,1392.15,1869", "01-Jan-2016 13:30:01,1392.95,1393,1392,1392.15,1869"}
+ <br/> You can Import this Data to AmiBroker as Well
+ </returns>
+	<remarks>
+ User must have enabled Historical API subscription.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetHistDataBatch(System.Boolean,System.String)">
+	<summary>
+ This method can be used to download and save historical data for multiple symbols at once
+ </summary>
+	<param name="IsSplitDateTime">True or False</param>
+	<param name="SaveFormat">csv or Txt</param>
+	<returns>True or False</returns>
+	<remarks>
+		<br/> #Lines starting with '#' will be assumed as comment and ignored. 
+ <br/> #This can be used to batch download historical data from API server 
+ <br/> #One line for each symbol in the below format. 
+ <br/> # 
+ <br/> #The format should be exactly as below 
+ <br/> #EXCH,TRADE_SYMBOL,INTERVAL,FROM_DATE,TO_DATE 
+ <br/> # 
+ <br/> #INTERVAL : minute| 3minute | 5minute | 10minute | 15minute | 30minute | 60minute | day
+ <br/> #FROM_DATE,TO_DATE : SHOULD BE IN DD-MMM-YYYY HH:MM:SS FORMAT 
+ <br/> # 
+ <br/> #EXAMPLES BELOW: 
+ <br/> # 
+ <br/> NSE,ADANIPORTS,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ <br/> NSE,AMBUJACEM,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ <br/> NSE,ASIANPAINT,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ <br/> NSE,AUROPHARMA,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ <br/> NSE,AXISBANK,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ <br/> NSE,BAJAJ-AUTO,minute,27-Mar-2018 00:00:01,28-Mar-2018 23:59:59 
+ </remarks>
+</member><member name="M:KiteNet.Kite.BatchOrderPlacement">
+	<summary>
+ This method can be used to place multiple orders at once
+ </summary>
+	<returns>True or False</returns>
+	<remarks>
+		<br/>
+		<br/> #Lines starting with '#' will be assumed as comment and ignored. 
+ <br/> #You can place batch order with KiteNet. 
+ <br/> #One line for each order in the below format. 
+ <br/> #If some field is not applicable then put 0 if it is number else leave blank if string. 
+ <br/> # 
+ <br/> #The format should be exactly as below 
+ <br/> #VARIETY,EXCH,TRADE_SYMBOL,TRANS_TYPE,QTY,ORDER_TYPE,PROD_TYPE,LMT_PRICE,TRG_PRICE,SQOFF_VALUE,STOPLOSS_VALUE,TRAIL_VALUE,STOPLOSS_PRICE,VALIDITY,DISC_QTY,CTAG,TAG 
+ <br/> # 
+ <br/> #VARIETY : REGULAR | BO | CO |AMO 
+ <br/> #TRANS_TYPE : BUY | SELL 
+ <br/> #QTY : NO OF SHARES (EQ) OR LOTS (FUT) TO BUY/SELL 
+ <br/> #ORDER_TYPE : LIMIT | MARKET | SL | SL-M 
+ <br/> #PROD_TYPE : CNC | MIS | NRML
+ <br/> #SQOFF_VALUE,STOPLOSS_VALUE,TRAIL_VALUE : APPLICABLE FOR BO 
+ <br/> #STOPLOSS_PRICE : APPLICABLE FOR CO 
+ <br/> #VALIDITY : DAY | IOC 
+ <br/> #CTAG : 3 - 20 CHARACTERS LONG ALPHANUMERIC STRING (OPTIONAL LEAVE BLANK IF NOT REQUIRED) 
+ <br/> #TAG : 2 - 8 CHARACTERS LONG ALPHANUMERIC STRING (OPTIONAL LEAVE BLANK IF NOT REQUIRED) 
+ <br/> # 
+ <br/> #EXAMPLES BELOW: 
+ <br/> # 
+ <br/> REGULAR,NFO,AXISBANK18APRFUT,BUY,1,MARKET,MIS,0,0,0,0,0,0,DAY,0,LONG,LONG 
+ <br/> REGULAR,NFO,AXISBANK18APRFUT,BUY,1,LIMIT,MIS,520.00,0,0,0,0,0,DAY,0,LONG,LONG 
+ <br/> BO,NFO,ICICIBANK18APRFUT,BUY,1,LIMIT,,282.60,0,2.15,1.50,4.00,0,,0,LONG,LONG 
+ <br/> CO,NFO,BHEL18APRFUT,SELL,1,MARKET,,0,0,0,0,0,96.55,,,SHORT,SHORT 
+ <br/> REGULAR,NFO,AXISBANK18APRFUT,BUY,1,LIMIT,MIS,520.00,0,0,0,0,0,DAY,0,LONG,LONG 
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetAccessToken">
+	<summary>
+ Retrieves Access Token from API server
+ </summary>
+	<example>
+ Imports KiteNet
+ <br/>Dim Kite as Kite = New Kite
+ <br/>
+		<br/>Kite.Api_Key = "xdefvsj455xxxx"
+ <br/>Kite.Api_Secret = "sghhyrteyens"
+ <br/>
+		<br/>Try
+ <br/>Kite.Login()
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+		<br/> If Kite.Login_Status then 'Call GetAccessToken Only If Login_Status is True
+ <br/> Try
+ <br/>Kite.GetAccessToken()
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+	</example>
+	<returns>True or False</returns>
+	<remarks>Access_Token Property is automatically set on successful authorization</remarks>
+</member><member name="M:KiteNet.Kite.GetAccessToken(System.String)">
+	<summary>
+ Retrieves Access Token from API server
+ </summary>
+	<param name="RequestToken">Request Token received in redirect url after successful login</param>
+	<example>
+ Imports KiteNet
+ <br/>Dim Kite as Kite = New Kite
+ <br/>
+		<br/>Kite.Api_Key = "xdefvsj455xxxx"
+ <br/>Kite.Api_Secret = "sghhyrteyens"
+ <br/>
+		<br/>Try
+ <br/>Kite.Login()
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+		<br/> If Kite.Login_Status then 'Call GetAccessToken Only If Login_Status is True
+ <br/> Try
+ <br/>Kite.GetAccessToken("sjashjaskjahajshasajsshhjassjashj")
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+	</example>
+	<returns>True or False</returns>
+	<remarks>Access_Token Property is automatically set on successful authorization</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.ExchToken">
+	<summary>
+ Get's the Exch token
+ </summary>
+	<value>Exch token</value>
+	<returns>Exch token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Exch">
+	<summary>
+ Get's the exchange
+ </summary>
+	<value>exchange</value>
+	<returns>exchange</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.TrdSym">
+	<summary>
+ Get's the trade_symbol
+ </summary>
+	<value>trade_symbol</value>
+	<returns>trade_symbol</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Product">
+	<summary>
+ Get's the Product
+ </summary>
+	<value>Product</value>
+	<returns>Product</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.OrderType">
+	<summary>
+ Get's the OrderType
+ </summary>
+	<value>OrderType</value>
+	<returns>OrderType</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Duration">
+	<summary>
+ Get's the Duration
+ </summary>
+	<value>Duration</value>
+	<returns>Duration</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Price">
+	<summary>
+ Get's the Price
+ </summary>
+	<value>Price</value>
+	<returns>Price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.TriggerPrice">
+	<summary>
+ Get's the TriggerPrice
+ </summary>
+	<value>TriggerPrice</value>
+	<returns>TriggerPrice</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Quantity">
+	<summary>
+ Get's the Quantity
+ </summary>
+	<value>Quantity</value>
+	<returns>Quantity</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.DisQuantity">
+	<summary>
+ Get's the Disclosed Quantity
+ </summary>
+	<value>Disclosed Quantity</value>
+	<returns>Disclosed Quantity</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.TransType">
+	<summary>
+ Get's the Transaction Type
+ </summary>
+	<value>Transaction Type</value>
+	<returns>Transaction Type</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.AvgPrice">
+	<summary>
+ Get's the Average Price
+ </summary>
+	<value>Average Price</value>
+	<returns>Average Price</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.TradedQty">
+	<summary>
+ Get's the Traded Quantity
+ </summary>
+	<value>Traded Quantity</value>
+	<returns>Traded Quantity</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Message">
+	<summary>
+ Get's the Order Message
+ </summary>
+	<value>Order Message</value>
+	<returns>Order Message</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.ExchId">
+	<summary>
+ Get's the Exchange Order Id
+ </summary>
+	<value>Exchange Order Id</value>
+	<returns>Exchange Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.ParentId">
+	<summary>
+ Get's the Parent Order Id
+ </summary>
+	<value>Parent Order Id</value>
+	<returns>Parent Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.OrderId">
+	<summary>
+ Get's the Order Id
+ </summary>
+	<value>Order Id</value>
+	<returns>Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.ExchTime">
+	<summary>
+ Get's the Exch Time
+ </summary>
+	<value>Exch Time</value>
+	<returns>Exch Time</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.TimeStamp">
+	<summary>
+ Get's the Timestamp
+ </summary>
+	<value>Timestamp</value>
+	<returns>Timestamp</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.Status">
+	<summary>
+ Get's the Order Status
+ </summary>
+	<value>Order Status</value>
+	<returns>Order Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.IsAmo">
+	<summary>
+ Get's the AMO Status
+ </summary>
+	<value>AMO Status</value>
+	<returns>AMO Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.ValidDate">
+	<summary>
+ Get's the Valid date
+ </summary>
+	<value>Valid date</value>
+	<returns>Valid date</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.OrderUpdateEventArgs.InstToken">
+	<summary>
+ Get's the Inst token
+ </summary>
+	<value>Inst token</value>
+	<returns>Inst token</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.OrderUpdateEventArgs.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Double,System.Double,System.Int32,System.Int32,System.String,System.Double,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.String,System.String)">
+	<summary>
+ Initializes a new instance of the OrderUpdateEventArgs class with Order details.
+ </summary>
+	<param name="sExch">Exch</param>
+	<param name="sExchToken">Exch Token</param>
+	<param name="sTrdSym">Trade Symbol</param>
+	<param name="sProduct">Product</param>
+	<param name="sOrderType">Order Type</param>
+	<param name="sDuration">Duration</param>
+	<param name="dPrice">Price</param>
+	<param name="dTriggerPrice">TriggerPrice</param>
+	<param name="iQty">Qty</param>
+	<param name="iDisQty">DisQty</param>
+	<param name="sTrans">Trans</param>
+	<param name="dAvgPrice">AvgPrice</param>
+	<param name="iTradedQty">TradedQty</param>
+	<param name="sMessage">Message</param>
+	<param name="sExchId">ExchId</param>
+	<param name="sParentId">ParentId</param>
+	<param name="sOrderId">OrderId</param>
+	<param name="sExchTime">ExchTime</param>
+	<param name="sTimeStamp">TimeStamp</param>
+	<param name="sStatus">Status</param>
+	<param name="bIsAmo">IsAmo</param>
+	<param name="sValidDate">ValidDate</param>
+	<param name="sInstToken">Inst Token</param>
+	<remarks></remarks>
+</member><member name="T:KiteNet.OrderUpdateEventArgs">
+	<summary>
+ Event arguments for the OrderUpdateEvent.
+ </summary>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.RefreshRTDQuotes">
+	<summary>
+ Refresh's RTD server quotes.
+ </summary>
+	<remarks>RTD server sends only changed quotes. If there is no change, RTD server will not send that quotes.
+ <br/>Ceratin price data like open, upper circuit etc are static throughout the day and sent only once by RTD server as the data is not changing.
+ <br/>If you add symbols to excel after subscribing quotes, you may not receive static quotes like above as they are already sent.
+ <br/>This call will force RTD server to send all quotes irrespective of whether it has changed or not.
+ <br/>Note: You hardly require this method. Call only once to update missing quotes if any, do not call this method in a loop.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetMtmProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's MTM for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>MTM</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetAvgBoughtPriceProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Avg Bought Price for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Avg Bought Price</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetAvgSoldPriceProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Avg Sold Price for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Avg Sold Price</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetNetQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Net Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Net Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBoughtQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Bought Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Bought Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetSoldQtyProduct(System.String,System.String,System.String)">
+	<summary>
+ Get's Sold Qty for the symbol and Product.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Sold Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetMtm(System.String,System.String)">
+	<summary>
+ Get's MTM for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>MTM</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetAvgBoughtPrice(System.String,System.String)">
+	<summary>
+ Get's Avg Bought Price for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Avg Bought Price</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetAvgSoldPrice(System.String,System.String)">
+	<summary>
+ Get's Avg Sold Price for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Avg Sold Price</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetNetQty(System.String,System.String)">
+	<summary>
+ Get's Net Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Net Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBoughtQty(System.String,System.String)">
+	<summary>
+ Get's Bought Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Bought Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetSoldQty(System.String,System.String)">
+	<summary>
+ Get's Sold Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Sold Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetTotalMTM(System.String)">
+	<summary>
+ Get's the total MTM of the given exchange.
+ </summary>
+	<param name="Exch">Exch</param>
+	<returns>Total MTM</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLTT(System.String,System.String)">
+	<summary>
+ Get's LTT for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LTT</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLUT(System.String,System.String)">
+	<summary>
+ Get's LUT for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LUT</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetUpperCircuit(System.String,System.String)">
+	<summary>
+ Gets's Upper Circuit for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Upper Circuit</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLowerCircuit(System.String,System.String)">
+	<summary>
+ Get's Lower Circuit for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Lower Circuit</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBestAskQty(System.String,System.String)">
+	<summary>
+ Get's Best Ask Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Ask Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBestBidQty(System.String,System.String)">
+	<summary>
+ Get's Best Bid Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Bid Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLTQ(System.String,System.String)">
+	<summary>
+ Get's LTQ for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>LTQ</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetTotalSellQty(System.String,System.String)">
+	<summary>
+ Gets's Total Sell Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Total Sell Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetTotalBuyQty(System.String,System.String)">
+	<summary>
+ Get's Total Buy Qty for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Total Buy Qty</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOpenInt(System.String,System.String)">
+	<summary>
+ Get's Open Int for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOIHigh(System.String,System.String)">
+	<summary>
+ Get's Open Int High for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int High</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOILow(System.String,System.String)">
+	<summary>
+ Get's Open Int Low for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int Low</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOINetChg(System.String,System.String)">
+	<summary>
+ Get's Open Int Net Chg for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int Net Chg</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOIPctChg(System.String,System.String)">
+	<summary>
+ Get's Open Int Pct Chg for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open Int Pct Chg</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetVolume(System.String,System.String)">
+	<summary>
+ Get's Volume for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Volume</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBestAsk(System.String,System.String)">
+	<summary>
+ Get's Best Ask for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Ask</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetBestBid(System.String,System.String)">
+	<summary>
+ Get's Best Bid for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Best Bid</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetAtp(System.String,System.String)">
+	<summary>
+ Get's ATP for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>ATP</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetClose(System.String,System.String)">
+	<summary>
+ Get's Close for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Close (Prv Day)</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLow(System.String,System.String)">
+	<summary>
+ Get's Low for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Low</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetHigh(System.String,System.String)">
+	<summary>
+ Gets's High for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>High</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOpen(System.String,System.String)">
+	<summary>
+ Get's Open for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Open</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetLtp(System.String,System.String)">
+	<summary>
+ Get's Ltp for the symbol.
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Ltp</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetSnapQuoteIndex(System.String,System.String,System.Boolean)">
+	<summary>
+ Gets the snap quote for the given index from API server
+ </summary>
+	<param name="ExchIndex">NSE_INDEX or BSE_INDEX</param>
+	<param name="SymbolIndex">Index Name</param>
+	<param name="RaiseQuoteEvent">true to raise QuotesReceivedEvent</param>
+	<returns>
+ Returns snap quotes as csv in the below format
+ <br/>LUT,EXCHANGE,SYMBOL,LTP,OPEN,HIGH,LOW,CLOSE,YEARLY_HIGH,YEARLY_LOW
+ <br/>16-Mar-2018 14:30:55,NSE_INDEX,NIFTY_50,10400.55,10396.00,10401.00,10395.00,10390.00,10700.00,9800.00
+ </returns>
+	<remarks>
+ Caution: Donot use this method for real time quotes instead use websocket. 
+ <br/>This method can be useful when you need data infrequently, say every 30 mins or 1 hour.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetSnapQuote(System.String,System.String,System.Boolean)">
+	<summary>
+ Gets the snap quote for the given symbol from API server
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="RaiseQuoteEvent">true to raise QuotesReceivedEvent</param>
+	<returns>Returns snap quotes as csv in the below format
+ <br/> LUT,EXCHANGE,SYMBOL,LTP,OPEN,HIGH,LOW,CLOSE,VTT,ATP,OI,SPOT_PRICE,TOTAL_BUY_QTY,TOTAL_SELL_QTY,LOWER_CIRCUIT,UPPER_CIRCUIT,BID_QTY1,BID_PRICE1,BID_ORDERS1,BID_QTY2,BID_PRICE2,BID_ORDERS2,BID_QTY3,BID_PRICE3,BID_ORDERS3,BID_QTY4,BID_PRICE4,BID_ORDERS4,BID_QTY5,BID_PRICE5,BID_ORDERS5,ASK_QTY1,ASK_PRICE1,ASK_ORDERS1,ASK_QTY2,ASK_PRICE2,ASK_ORDERS2,ASK_QTY3,ASK_PRICE3,ASK_ORDERS3,ASK_QTY4,ASK_PRICE4,ASK_ORDERS4,ASK_QTY5,ASK_PRICE5,ASK_ORDERS5,LTT
+ </returns>
+	<remarks>
+ Caution: Donot use this method for real time quotes instead use websocket. 
+ <br/>This method can be useful when you need data infrequently, say every 30 mins or 1 hour.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetSnapOHLC(System.String,System.String,System.Boolean)">
+	<summary>
+ Gets the snap ohlc for the given symbol from API server
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="RaiseQuoteEvent">true to raise QuotesReceivedEvent</param>
+	<returns>Returns snap ohlc as csv in the below format
+ <br/> LUT,EXCHANGE,SYMBOL,LTP,OPEN,HIGH,LOW,CLOSE
+ <br/> 16-Mar-2018 14:45:55,NSE,AXISBANK,456.85,456.95,458.00,456.85,453.25
+ </returns>
+	<remarks>
+ Caution: Donot use this method for real time quotes instead use websocket. 
+ <br/>This method can be useful when you need data infrequently, say every 30 mins or 1 hour.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetSnapLtp(System.String,System.String,System.Boolean)">
+	<summary>
+ Gets the snap ltp for the given symbol from API server
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="RaiseQuoteEvent">true to raise QuotesReceivedEvent</param>
+	<returns>Returns snap ltp as csv in the below format
+ <br/>LUT,EXCHANGE,SYMBOL,LTP
+ <br/>16-Mar-2018 14:45:55,NSE,AXISBANK,456.85
+ </returns>
+	<remarks>
+ Caution: Donot use this method for real time quotes instead use websocket. 
+ <br/>This method can be useful when you need data infrequently, say every 30 mins or 1 hour.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetOrderBook">
+	<summary>
+ Retrieve's Order Bookfrom API server
+ </summary>
+	<returns>Order book as csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetTradeBook">
+	<summary>
+ Retrieve's Trade Bookfrom API server
+ </summary>
+	<returns>Trade book as csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetPositions(System.String)">
+	<summary>
+ Retrieve's Positionsfrom API server
+ </summary>
+	<param name="Mode">Day | Net</param>
+	<returns>Position book as csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetFunds">
+	<summary>
+ Retrieve's Funds and Margins from API server
+ </summary>
+	<returns>Funds as csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetHoldings">
+	<summary>
+ Retrieve's Holdings from API server
+ </summary>
+	<returns>Holdings as csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetBridgePositionsAll">
+	<summary>
+ Get's All Bridge Positions
+ </summary>
+	<returns>
+ All Bridge Positions as Csv
+ </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.GetBridgePositions">
+	<summary>
+ Get's Bridge Positions
+ </summary>
+	<returns>
+ Bridge Positions as Csv
+ </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.GetBridgeLogs">
+	<summary>
+ Get's Bridge Logs
+ </summary>
+	<returns>
+ Bridge requests as Csv
+ </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.DeleteIECookies">
+	<summary>
+ Deletes Internet Explorer Cache, Cookies and Browsing History.
+ </summary>
+	<remarks>
+ This method can be used to clear the login information stored by Internet Explorer.
+ </remarks>
+</member><member name="M:KiteNet.Kite.ShowSettingsWindow">
+	<summary>
+ Displays Settings Window where a user can input API details in UI mode.
+ </summary>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ShowMsgBox(System.String,System.String,System.String,System.Boolean,System.Int32)">
+	<summary>
+ Displays a simple Message Box .
+ </summary>
+	<param name="Line1">Line1</param>
+	<param name="Line2">Line2</param>
+	<param name="Line3">Line3</param>
+	<param name="CanAutoClose">CanAutoClose</param>
+	<param name="SleepTime">SleepTime in milliseconds</param>
+	<returns>DialogResult</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.ShowMsgBoxOkCancel(System.String,System.String,System.String)">
+	<summary>
+ Displays a simple OkCancel Message Box .
+ </summary>
+	<param name="Line1">Line1</param>
+	<param name="Line2">Line2</param>
+	<param name="Line3">Line3</param>
+	<returns>DialogResult</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.ShowInputBox(System.String,System.String)">
+	<summary>
+ Displays a simple Input Box where the user will be prompt to enter value.
+ </summary>
+	<param name="Prompt1">Prompt1</param>
+	<param name="Prompt2">Prompt2</param>
+	<returns>User Input or Empty String if user cancel the prompt</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ShowMultiInputBox(System.String,System.String,System.String,System.String,System.String,System.String)">
+	<summary>
+ Displays a simple Multi Input Box where the user will be prompt to enter multiple values.
+ </summary>
+	<param name="Prompt">Prompt to user</param>
+	<param name="Label1"> Label1</param>
+	<param name="Label2">Label2</param>
+	<param name="Label3">Label3</param>
+	<param name="Label4">Label4</param>
+	<param name="Label5">Label5</param>
+	<returns>Array of String with Fixed Size of 5.Elements sequence is same as Label Sequence.</returns>
+	<remarks> You need to convert the each element to respective data type as required before utilising them</remarks>
+</member><member name="M:KiteNet.Kite.ShowOrderWindow">
+	<summary>
+ Displays New Order Window where a user can place order in UI mode.
+ </summary>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ShowOrderWindowBridge">
+	<summary>
+ Displays Order Window where a user can place order through Bridge class.
+ </summary>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ShowModifyWindow">
+	<summary>
+ Displays Modify Order Window where a user can modify/cancel order in UI mode.
+ </summary>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ShowModifyWindow(System.String)">
+	<summary>
+ Displays Modify Order Window where a user can modify/cancel order in UI mode.
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<remarks>This is an overload method where you can pass the Order Id as param instead of manually typing in the textbox</remarks>
+</member><member name="M:KiteNet.Kite.ShowOrderWindow(System.String,System.String,System.String,System.String,System.Int32,System.String,System.String)">
+	<summary>
+ Displays Order Window where a user can place a order in UI mode.
+ </summary>
+	<param name="Trans">B or S. Not case sensitive.</param>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Should be I or D</param>
+	<param name="Qty">Quantity</param>
+	<param name="OrdType">M, L, SL, SL-M</param>
+	<param name="OrderComplex">Regular, BO, CO</param>
+	<remarks>
+		<br/> This is an overload method where you can pass the Order details as param instead of manually typing in the textbox
+ <br/> This method used in SqOff call. Only Supports Product I or D
+ <br/> By default Order Window Opens with OrderType 'M'
+ </remarks>
+</member><member name="M:KiteNet.Kite.ShowHistDataInputBox">
+	<summary>
+ Displays a Input Box where the user can enter or select symbol details required for GetHistData() Call.
+ </summary>
+	<returns>Array of object containing symbol details with Fixed Size of 4.Elements sequence is Exch,TradeSymbol,Interval,NoOfDays</returns>
+	<remarks> You need to convert the each element to respective data type as required before utilising them</remarks>
+</member><member name="M:KiteNet.Kite.ShowMarketDepth(System.String,System.String)">
+	<summary>
+ Show Market depth for the given Trade Symbol
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderCTag(System.String,System.String,System.String)">
+	<summary>
+ Get's OrderId for the given exch, trdsym and tag combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="CTag">Custom tag</param>
+	<returns>Order Id</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderPendingQty(System.String)">
+	<summary>
+ Get's the Order Pending Quantity
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Pending Qty</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderDiscQty(System.String)">
+	<summary>
+ Get's the Order Disclosed Quantity
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Disclosed Qty</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderExchToken(System.String)">
+	<summary>
+ Get's the Order Exchange Token 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Exch Token</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderInstToken(System.String)">
+	<summary>
+ Get's the Order Inst Token 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Inst Token</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderExch(System.String)">
+	<summary>
+ Get's the Order Exchange 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Exchange</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderTrdSym(System.String)">
+	<summary>
+ Get's the Order Trade Symbol 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Trade Symbol</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderType(System.String)">
+	<summary>
+ Get's the Order Type
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>MARKET or LIMIT or SL or SL-m</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderProdType(System.String)">
+	<summary>
+ Get's the Order Product Type 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>MIS OR CNC or NRML or BO or CO</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderTrans(System.String)">
+	<summary>
+ Get's the Order Transaction Type 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>BUY or SELL</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderStatus(System.String)">
+	<summary>
+ Get's the Order Status
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>One of the Order Status OPEN|TRIGGER PENDING|COMPLETE|CANCELLED|REJECTED</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderExchId(System.String)">
+	<summary>
+ Get's the Order ExchId 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order ExchId</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderTag(System.String)">
+	<summary>
+ Get's the Order Tag (API Supported)
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Tag</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderVariety(System.String)">
+	<summary>
+ Get's the Order Variety 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Variety</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderTime(System.String)">
+	<summary>
+ Get's the Order Time
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Time </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderExchTime(System.String)">
+	<summary>
+ Get's the Order Exch Time
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Exch Time </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderValidDate(System.String)">
+	<summary>
+ Get's the Order Valid Date
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Valid Date </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderParentId(System.String)">
+	<summary>
+ Get's the Order ParentId 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order ParentId </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderFilledPrice(System.String)">
+	<summary>
+ Get's the Order Filled Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Filled price </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderFilledQty(System.String)">
+	<summary>
+ Get's the Order Filled Qty 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Filled Qty </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderMessage(System.String)">
+	<summary>
+ Get's the Order Message 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Message </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderQty(System.String)">
+	<summary>
+ Get's the Order Qty 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Qty </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderPrice(System.String)">
+	<summary>
+ Get's the Order Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Price </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderTriggerPrice(System.String)">
+	<summary>
+ Get's the Order Trigger Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Trigger Price </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetChildOrders(System.String)">
+	<summary>
+ Get's the Child Orders for BO|CO
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Child Order Id's as Csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderDetails(System.String)">
+	<summary>
+ Get's the Order Details 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Details as Csv in the below format
+ <br/>EXCHANGE,TOKEN,SYMBOL,PRODUCT,ORDER_TYPE,PRICE,TRIGGER_PRICE,QUANTITY,TRANSACTION_TYPE,AVERAGE_PRICE,TRADED_QUANTITY,MESSAGE,EXCHANGE_ORDER_ID,PARENT_ORDER_ID,ORDER_ID,ORDER_TIME,STATUS
+ </returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderIds(System.String,System.String,System.String)">
+	<summary>
+ Get's all Order Ids for the given Exch, Symbol and Product Combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>Order Ids as Csv</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetLastOrderId(System.String,System.String,System.String)">
+	<summary>
+ Get's Id of the Last Placed order for the Exch, Symbol and Product Combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Product">Product</param>
+	<returns>OrderId</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetOrderHist(System.String)">
+	<summary>
+ Get's the complete order history from API server
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Complete Order History in Csv Format</returns>
+	<remarks>Caution: This call fetches data from API server. Use this method only when it is absolutely necessay</remarks>
+</member><member name="M:KiteNet.Kite.GetTradeHist(System.String)">
+	<summary>
+ Get's the complete trade history from API server
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Complete Trade History in Csv Format</returns>
+	<remarks>Caution: This call fetches data from API server. Use this method only when it is absolutely necessay</remarks>
+</member><member name="P:KiteNet.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:KiteNet.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:KiteNet.My.Resources.Resources.KiteNet">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member><member name="P:KiteNet.My.Resources.Resources.mcxblot">
+	<summary>
+  Looks up a localized string similar to GOLD,100
+GOLDM,0.1
+GOLDGUINEA,0.125
+SILVER,1
+SILVERM,1
+SILVERMIC,1
+LEAD,1000
+LEADMINI,1000
+ZINC,1000
+ZINCMINI,1000
+ALUMINIUM,1000
+COPPER,1000
+NICKEL,1
+CRUDEOIL,1
+CRUDEOILM,1
+NATURALGAS,1
+ALUMINI,1000
+BRCRUDEOIL,100
+CARDAMOM,1
+COPPERM,1
+COTTON,1
+CPO,100
+GOLDPETAL,1
+GOLDPTLDEL,1
+GUARSEED,10
+KAPAS,50
+KAPASKHALI,10
+MENTHAOIL,1
+NICKELM,1
+SILVER1000,1.
+</summary>
+</member><member name="P:KiteNet.My.Resources.Resources.setting">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member><member name="T:KiteNet.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:KiteNet.Bridge.GetOrderCTag(System.String,System.String,System.String)">
+	<summary>
+ Get's OrderId for the given exch, trdsym and tag combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="CTag">Custom tag</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderPendingQty(System.String)">
+	<summary>
+ Get's the Order Pending Quantity
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Pending Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderDiscQty(System.String)">
+	<summary>
+ Get's  the Order Disclosed Quantity
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Disclosed Qty</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderExchToken(System.String)">
+	<summary>
+ Get's the Order Exchange Token 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Exch Token</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderInstToken(System.String)">
+	<summary>
+ Get's the Order Inst Token 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Inst Token</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderExch(System.String)">
+	<summary>
+ Get's the Order Exchange 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Exchange</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderTrdSym(System.String)">
+	<summary>
+ Get's the Order Trade Symbol 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Trade Symbol</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderType(System.String)">
+	<summary>
+ Get's the Order Type
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>MARKET or LIMIT or SL or SL-M</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderProdType(System.String)">
+	<summary>
+ Get's the Order Product Type 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>MIS or CNC OR NRML or BO or CO</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderTrans(System.String)">
+	<summary>
+ Get's the Order Transaction Type 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>BUY or SELL</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderStatus(System.String)">
+	<summary>
+ Get's the Order Status
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>One of the Order Status OPEN|TRIGGER PENDING|COMPLETE|CANCELLED|REJECTED</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderExchId(System.String)">
+	<summary>
+ Get's the Order ExchId 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>ExchId</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderTag(System.String)">
+	<summary>
+ Get's the Order Tag (API Supported)
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Tag</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderVariety(System.String)">
+	<summary>
+ Get's the Order Variety
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Variety</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderTime(System.String)">
+	<summary>
+ Get's the Order Time 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Time</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderExchTime(System.String)">
+	<summary>
+ Get's the Order Exch Time 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order Exch Time</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderValidDate(System.String)">
+	<summary>
+ Get's the Order valid Date
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Order valid Date</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderParentId(System.String)">
+	<summary>
+ Get's the Order ParentId 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>ParentId </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderFilledPrice(System.String)">
+	<summary>
+ Get's the Order Filled Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Filled price </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderFilledQty(System.String)">
+	<summary>
+ Get's the Order Filled Qty 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Filled Qty </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderMessage(System.String)">
+	<summary>
+ Get's the Order Message 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Message </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderQty(System.String)">
+	<summary>
+ Get's the Order Qty 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Qty </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderPrice(System.String)">
+	<summary>
+ Get's the Order Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Price </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderTriggerPrice(System.String)">
+	<summary>
+ Get's the Order Trigger Price 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Trigger Price </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetChildOrders(System.String)">
+	<summary>
+ Get's the Child Orders for BO|CO
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Child Order Ids as Csv</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderDetails(System.String)">
+	<summary>
+ Get's the Order Details 
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Comma Seperated Order Details in the below format
+ <br/>EXCHANGE,TOKEN,SYMBOL,PRODUCT,ORDER_TYPE,PRICE,TRIGGER_PRICE,QUANTITY,TRANSACTION_TYPE,AVERAGE_PRICE,TRADED_QUANTITY,MESSAGE,EXCHANGE_ORDER_ID,PARENT_ORDER_ID,ORDER_ID,ORDER_TIME,STATUS
+ </returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderIds(System.String,System.String,System.String)">
+	<summary>
+ Get's Order Ids for the Exch, Symbol and Product Combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="ProdType">Product</param>
+	<returns>Order Ids as Csv</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.GetLastOrderId(System.String,System.String,System.String)">
+	<summary>
+ Get's Id of the Last Placed order for the Exch, Symbol and Product Combination 
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="ProdType">Product</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Kite.#ctor">
+	<summary>
+ Initializes a new instance of the Kite class
+ </summary>
+	<remarks>
+ Follow the login sequence/procedure before making any order and quote request call.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Api_Key">
+	<summary>
+ Get's or Set's API Key
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.Api_Key = "aswax145xxxxxxxx"
+ </example>
+	<value>api_key</value>
+	<returns>API Key</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Api_Secret">
+	<summary>
+ Get's or Set's API Secret
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.Api_Secret = "aswax145xxxxxxxx"
+ </example>
+	<value>api_secret</value>
+	<returns>API Secret</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Redirect_Url">
+	<summary>
+ Get's or Set's Redirect Url
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.Redirect_Url = "https://zerodha.com"
+ </example>
+	<value>redirect_url</value>
+	<returns>Redirect Url</returns>
+	<remarks>It should exactly match with your Redirect Url in the API Developer Account</remarks>
+</member><member name="P:KiteNet.Kite.ProxyDomain">
+	<summary>
+ Get's or Set's Proxy Domain
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.ProxyDomain = "mydomain.com"
+ </example>
+	<value>Proxy Domain</value>
+	<returns>Proxy Domain</returns>
+	<remarks>
+ If proxy server doesn't require a domain or using anonymous proxy, leave this propery blank
+ </remarks>
+</member><member name="P:KiteNet.Kite.ProxyPassword">
+	<summary>
+ Get's or Set's Proxy Password
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.ProxyPassword = "password"
+ </example>
+	<value>Proxy Password</value>
+	<returns>Proxy Password</returns>
+	<remarks>
+ If using anonymous proxy, leave this propery blank
+ </remarks>
+</member><member name="P:KiteNet.Kite.ProxyUserName">
+	<summary>
+ Get's or Set's Proxy UserName
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.ProxyUserName = "username"
+ </example>
+	<value>Proxy UserName</value>
+	<returns>Proxy UserName</returns>
+	<remarks>
+ If using anonymous proxy, leave this propery blank
+ </remarks>
+</member><member name="P:KiteNet.Kite.ProxyServer">
+	<summary>
+ Get's or Set's Proxy Server
+ </summary>
+	<example>
+ Dim Kite As New Kite
+ <br/>
+		<br/>Kite.ProxyServer = "128.55.66.99"
+ </example>
+	<value>Proxy Server</value>
+	<returns>Proxy Server</returns>
+	<remarks>
+	</remarks>
+</member><member name="P:KiteNet.Kite.ProxyPort">
+	<summary>
+ Get's or Set's Proxy Port
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.ProxyPort = 8080
+ </example>
+	<value>Proxy Port Number</value>
+	<returns>Proxy Port Number</returns>
+	<remarks>
+	</remarks>
+</member><member name="P:KiteNet.Kite.UseProxyServer">
+	<summary>
+ Get's or Set's Proxy Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.UseProxyServer = True
+ </example>
+	<value>True or False</value>
+	<returns>Proxy Status</returns>
+	<remarks>
+ Make sure you set proxy server details if using proxy server
+ </remarks>
+</member><member name="P:KiteNet.Kite.LogTicks">
+	<summary>
+ Get's or Set's Ticks Log Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.LogTicks = True
+ </example>
+	<value>True or False</value>
+	<returns>Log Status</returns>
+	<remarks>
+ When enabled this will log every ticks received in websocket to text file. Default it is disabled.
+ <br/>Ticks will be logged to the below file
+ <br/>[APPDIR]\KiteNet\[DDMMMYYYY]\TickData\[SYMBOL].txt
+ <br/>Ticks will be logged in the below format without header.
+ <br/>LUD,LUT,EXCH,TRADE_SYMBOL,LTP,OPEN,HIGH,LOW,CLOSE,LTQ,ATP,VOLUME,TOTAL_BUYQTY,TOTAL_SELLQTY,SPOT,OI,LOWER_CIRCUIT,UPPER_CIRCUIT,YEARLY_HIGH,YEARLY_LOW,LTD,LTT,OI_HIGH,OI_LOW,OI_NETCHG,OI_PCTCHG,BIDQTY1,BIDPRICE1,BIDORDERS1,BIDQTY2,BIDPRICE2,BIDORDERS2,BIDQTY3,BIDPRICE3,BIDORDERS3,BIDQTY4,BIDPRICE4,BIDORDERS4,BIDQTY5,BIDPRICE5,BIDORDERS5,ASKQTY1,ASKPRICE1,ASKORDERS1,ASKQTY2,ASKPRICE2,ASKORDERS2,ASKQTY3,ASKPRICE3,ASKORDERS3,ASKQTY4,ASKPRICE4,ASKORDERS4,ASKQTY5,ASKPRICE5,ASKORDERS5
+ <br/>Ticks are written in Async mode.
+ </remarks>
+</member><member name="P:KiteNet.Kite.LogMTM">
+	<summary>
+ Get's or Set's MTM Log Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.LogMTM = True
+ </example>
+	<value>True or False</value>
+	<returns>Log Status</returns>
+	<remarks>
+ When enabled this will log every MTM changes to text file. Default it is disabled.
+ <br/>MTM will be logged to the below file
+ <br/>[APPDIR]\KiteNet\[DDMMMYYYY]\MTMData\[SYMBOL].txt
+ <br/>MTM will be logged in the below format without header.
+ <br/>DATE,TIME,EXCH,TRADE_SYMBOL,AVG_BUYPRICE,AVG_SELLPRICE,BUY_QTY,SELL_QTY,NET_QTY,MTM,LTP,BID,ASK
+ <br/>MTM is written in Async mode.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Stream_Mode">
+	<summary>
+ Get's or Set's Stream Mode
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Stream_Mode = Mode.Full
+ </example>
+	<value>1-LTP|2-Quote|3-Full</value>
+	<returns>Stream Mode</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Excel_Mode">
+	<summary>
+ Get's or Set's Excel Mode
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Excel_Mode = True
+ </example>
+	<value>True or False</value>
+	<returns>Excel Mode</returns>
+	<remarks>
+ If Excel Mode is enabled, you will get data in Excel through RTD. Default, it is enabled.
+ <br/> Disable it if you are not using excel.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Email_Alerts">
+	<summary>
+ Get's or Set's Email Alerts Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Email_Alerts = True
+ </example>
+	<value>True or False</value>
+	<returns>Email Alert Status</returns>
+	<remarks>
+ If  enabled, you will get email on app events, position and order updates. Default, it is not enabled.
+ </remarks>
+</member><member name="P:KiteNet.Kite.SMS_Alerts">
+	<summary>
+ Get's or Set's SMS Alerts Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.SMS_Alerts = True
+ </example>
+	<value>True or False</value>
+	<returns>SMS Alert Status</returns>
+	<remarks>
+ If enabled, you will get SMS on app events, position and order updates. Default, it is not enabled.
+ <br/>SMS is not sent currently. This is reserved for future use.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Email_Id_Alerts">
+	<summary>
+ Get's or Set's Email Id For Alerts
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Email_Id_Alerts = "user@gmail.com"
+ </example>
+	<value>String</value>
+	<returns>Email Id</returns>
+	<remarks>
+ This email id will be used to send email alerts on app events, position and order updates.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Mobile_No_Alerts">
+	<summary>
+ Get's or Set's Mobile No For Alerts
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Mobile_No_Alerts = "9988776655"
+ </example>
+	<value>String</value>
+	<returns>Mobile No</returns>
+	<remarks>
+ This mobile number will be used to send SMS alerts on app events, position and order updates.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Bridge_Notification">
+	<summary>
+ Get's or Set's Bridge Notification Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Bridge_Notification = True
+ </example>
+	<value>True or False</value>
+	<returns>Bridge Notification Status</returns>
+	<remarks>
+ If enabled, you will get Tray Notification for every bridge request you receive in KiteNet. Default, it is enabled.
+ <br/> This is reserved for future use.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Order_Notification">
+	<summary>
+ Get's or Set's Order Notification Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Order_Notification = True
+ </example>
+	<value>True or False</value>
+	<returns>Order Notification Status</returns>
+	<remarks>
+ If enabled, you will get Tray Notification for every order updates. Default, it is enabled.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Position_Notification">
+	<summary>
+ Get's or Set's Position Notification Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.Position_Notification = True
+ </example>
+	<value>True or False</value>
+	<returns>Position Notification Status</returns>
+	<remarks>
+ If enabled, you will get Tray Notification for every positions updates. Default, it is enabled.
+ </remarks>
+</member><member name="P:KiteNet.Kite.App_Notification">
+	<summary>
+ Get's or Set's App Notification Status
+ </summary>
+	<example>
+ Dim Kite As Kite = New Kite
+ <br/>
+		<br/>Kite.App_Notification = True
+ </example>
+	<value>True or False</value>
+	<returns>App Notification Status</returns>
+	<remarks>
+ If enabled, you will get Tray Notification for app events like network and websocket disconnect etc.  Default, it is enabled.
+ </remarks>
+</member><member name="P:KiteNet.Kite.Request_Token">
+	<summary>
+ Get's Request Token
+ </summary>
+	<value>Request_Token</value>
+	<returns>Request_Token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Access_Token">
+	<summary>
+ Get's Access Token
+ </summary>
+	<value>Access_Token</value>
+	<returns>Access_Token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Public_Token">
+	<summary>
+ Get's Public Token
+ </summary>
+	<value>Public_Token</value>
+	<returns>Public_Token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.User_Type">
+	<summary>
+ Get's User Type
+ </summary>
+	<value>User_Type</value>
+	<returns>User_Type</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Root_EndPoint">
+	<summary>
+ Get's Root EndPoint
+ </summary>
+	<value>root_endpoint</value>
+	<returns>Root EndPoint</returns>
+	<remarks>Default Value https://api.kite.com</remarks>
+</member><member name="P:KiteNet.Kite.Login_Url">
+	<summary>
+ Get's Login Url
+ </summary>
+	<value>login_url</value>
+	<returns>Login Url</returns>
+	<remarks>Default Value https://kite.trade</remarks>
+</member><member name="P:KiteNet.Kite.Client_Id">
+	<summary>
+ Get's Client Id
+ </summary>
+	<value>client_id</value>
+	<returns>Client Id</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Client_Name">
+	<summary>
+ Get's Client Name
+ </summary>
+	<value>client_name</value>
+	<returns>Client Name</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Client_Email">
+	<summary>
+ Get's Client Email
+ </summary>
+	<value>client_email</value>
+	<returns>Client Email</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Client_Phone">
+	<summary>
+ Get's Client Phone
+ </summary>
+	<value>client_phone</value>
+	<returns>Client Phone</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Login_Status">
+	<summary>
+ Get's Login Status
+ </summary>
+	<value>True or False</value>
+	<returns>Login Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Login_Response">
+	<summary>
+ Get's Login Response
+ </summary>
+	<value>Success|No Network|Invalid API Key|Login Aborted By User|Unauthorized Access|OMS Down|Internal Server Error|Missing Authentication Token|Invalid Redirect Url|Invalid Request|Access Denied|Login Timedout|Unknown Error</value>
+	<returns>Login Response</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Logout_Status">
+	<summary>
+ Get's Logout Status
+ </summary>
+	<value>True or False</value>
+	<returns>Logout Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Symbol_Download_Status">
+	<summary>
+ Get's Symbol Download Status
+ </summary>
+	<value>True or False</value>
+	<returns>Symbol Download Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Authorization_Status">
+	<summary>
+ Get's Authorization Status
+ </summary>
+	<value>True or False</value>
+	<returns>Authorization Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsBOEnabled">
+	<summary>
+ Get's User BO Status
+ </summary>
+	<value>True or False</value>
+	<returns>User BO Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsCOEnabled">
+	<summary>
+ Get's User CO Status
+ </summary>
+	<value>True or False</value>
+	<returns>User CO Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsActiveClient">
+	<summary>
+ Get's User Account Status
+ </summary>
+	<value>True or False</value>
+	<returns>User Account Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Exchange_Enabled">
+	<summary>
+ Get's Exchanges Enabled For User
+ </summary>
+	<value>NSE,BSE,NFO,MCX</value>
+	<returns>Exchanges Enabled For the User with Comma Seperated</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.Product_Enabled">
+	<summary>
+ Get's Products Enabled For User
+ </summary>
+	<value>D,I,BO,CO</value>
+	<returns>Products Enabled For the User with Comma Seperated</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsWebSockLive">
+	<summary>
+ Get's Websocket Status
+ </summary>
+	<value>True or False</value>
+	<returns>Websocket Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsReconnectingWebsocket">
+	<summary>
+ Get's Websocket Reconnection Status
+ </summary>
+	<value>True or False</value>
+	<returns>Websocket Reconnection Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsSubscribingAllQuotes">
+	<summary>
+ Get's All Quotes Subscribing Status
+ </summary>
+	<value>True or False</value>
+	<returns>All Quotes Subscribing Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsUnSubscribingAllQuotes">
+	<summary>
+ Get's All Quotes UnSubscribing Status
+ </summary>
+	<value>True or False</value>
+	<returns>All Quotes UnSubscribing Status</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.Kite.IsInternetAvailable">
+	<summary>
+ Get's Internet Status
+ </summary>
+	<value>True or False</value>
+	<returns>Internet Status</returns>
+	<remarks>
+ Caution : This may give wrong status when connected to Wi-Fi/LAN
+ </remarks>
+</member><member name="E:KiteNet.Kite.QuotesReceivedEvent">
+	<summary>
+ This is raised whenever new data arrives from API server
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">QuotesReceivedEventArgs</param>
+	<remarks>
+	</remarks>
+</member><member name="E:KiteNet.Kite.OrderUpdateEvent">
+	<summary>
+ This is raised whenever order updates arrives from API server
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">OrderUpdateEventArgs</param>
+	<remarks></remarks>
+</member><member name="E:KiteNet.Kite.TradeUpdateEvent">
+	<summary>
+ This is raised whenever trade updates arrives from API server
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">TradeUpdateEventArgs</param>
+	<remarks></remarks>
+</member><member name="E:KiteNet.Kite.PositionUpdateEvent">
+	<summary>
+ This is raised whenever any changes in the positions
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">PositionUpdateEventArgs</param>
+	<remarks>API server does not stream this data in websocket. This data is internally calculated by KiteNet Library using the order details received through websocket/order book.</remarks>
+</member><member name="E:KiteNet.Kite.MtmUpdateEvent">
+	<summary>
+ This is raised whenever any changes in the MTM 
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">MtmUpdateEventArgs</param>
+	<remarks>API server does not stream this data in websocket. This data is internally calculated by KiteNet Library using the order details received through websocket/order book.</remarks>
+</member><member name="E:KiteNet.Kite.AppUpdateEvent">
+	<summary>
+ This is raised whenever critical app events occurs like network disconnection etc
+ </summary>
+	<param name="sender">Nothing</param>
+	<param name="e">AppUpdateEventArgs</param>
+	<remarks>Note: Websocket reconnection's are automatically handled by KiteNet</remarks>
+</member><member name="M:KiteNet.Kite.Finalize">
+	<summary>
+ Finalize
+ </summary>
+	<remarks></remarks>
+</member><member name="T:KiteNet.Kite">
+	<summary>
+ This class exposes all properties and methods supported by Kite Connect API
+ </summary>
+	<example>
+ ***** Using in Visual Studio *****
+ <br/>'Add reference to KiteNet.dll in your project.
+ <br/>Imports KiteNet
+ <br/>
+		<br/> Public Class SampleApp 
+ <br/> Dim Kite as Kite = New Kite 'Creates a New Instance of Kite
+ <br/> End Class
+ <br/> 
+ <br/>***** Using in Excel *****
+ <br/>'Early Binding Example
+ <br/>'Add reference to KiteNet.dll in Visaul Basic Editor by 
+ <br/>Menu --&gt; Tools --&gt; Add Reference --&gt; Select 'DotNet Library For Kite Connect API'
+ <br/>
+		<br/>Dim Kite as New Kite 'Creates a New Instance of Kite
+ <br/>
+		<br/>'Late Binding without adding Reference
+ <br/> Dim Kite as Object
+ <br/> Set Kite = CreateObject("KiteNet.Kite")
+ </example>
+	<remarks>
+ Log folder : [APPDIR]\KiteNet\[DDMMMYYYY]
+ <br/>To use with excel, you need to register the KiteNet.dll using regasm as per your excel bit.
+ <br/>You can download the KiteNet.zip file from https://howutrade.in and follow the notes.
+ <br/>Batch file to register the DLL is included in the zip file.
+ <br/>You can get start with our Sample Excel Sheet or App.
+ </remarks>
+</member><member name="M:KiteNet.Bridge.ResetRegularOrderSignals(System.String,System.String,System.String)">
+	<summary>
+ Resets Regular Order Placement
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<returns>Status</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.ResetBOSignals(System.String,System.String,System.String)">
+	<summary>
+ Resets BO Order Placement
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<returns>Status</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.ResetCOSignals(System.String,System.String,System.String)">
+	<summary>
+ Resets CO Order Placement
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<returns>Status</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.ResetAmoSignals(System.String,System.String,System.String)">
+	<summary>
+ Resets AMO Order Placement
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<returns>Status</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.CancelAmoBridge(System.String,System.Boolean)">
+	<summary>
+ Cancels a AMO Order
+ </summary>
+	<param name="OrderId">OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>Status</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.CancelBOMainBridge(System.String,System.Boolean)">
+	<summary>
+ Cancels a Open or Trigger Pending BO entry order
+ </summary>
+	<param name="OrderId">OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>Status</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.CancelCOMainBridge(System.String,System.Boolean)">
+	<summary>
+ Cancels a Open or Trigger Pending CO entry order
+ </summary>
+	<param name="OrderId">OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>Status</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.CancelRegularOrderBridge(System.String,System.Boolean)">
+	<summary>
+ Cancels a Open or Trigger Pending Regular Order
+ </summary>
+	<param name="OrderId">OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>Status</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ExitBOBridge(System.String,System.Boolean)">
+	<summary>
+ Exits a open BO Position.
+ </summary>
+	<param name="OrderId">Any Child OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks>
+ Call GetChildOrders to get Child OrderIds
+ </remarks>
+</member><member name="M:KiteNet.Bridge.ExitCOBridge(System.String,System.Boolean)">
+	<summary>
+ Exits a open CO Position.
+ </summary>
+	<param name="OrderId">Child OrderId</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks>
+ Call GetChildOrders to get Child OrderIds
+ </remarks>
+</member><member name="M:KiteNet.Bridge.ModifyCOSlBridge(System.String,System.Double,System.Boolean)">
+	<summary>
+ Modifies a  Trigger Pending CO Stoploss Order
+ </summary>
+	<param name="OrderId">Stoploss OrderId</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ModifyBOTgtBridge(System.String,System.Double,System.Boolean)">
+	<summary>
+ Modifies a Open BO Target Order
+ </summary>
+	<param name="OrderId">Target OrderId</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ModifyBOSlBridge(System.String,System.Double,System.Boolean)">
+	<summary>
+ Modifies a Trigger Pending BO Stoploss Order
+ </summary>
+	<param name="OrderId">Stoploss OrderId</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ModifyBOMainBridge(System.String,System.Int32,System.Double,System.Double,System.Boolean)">
+	<summary>
+ Modifies a Open or Trigger Pending BO entry order
+ </summary>
+	<param name="OrderId">OrderId</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<returns>OrderId</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ModifyRegularOrderBridge(System.String,System.String,System.Int32,System.Double,System.Double,System.Boolean,System.Int32)">
+	<summary>
+ Modifies a Open or Trigger Pending Regular Order
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<param name="OrdType">MARKET|LIMIT|SL|SL-M</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<param name="DiscQty">DiscQty</param>
+	<returns>OrderId</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.PlaceRegularOrderBridge(System.String,System.String,System.String,System.String,System.Int32,System.String,System.Double,System.Double,System.String,System.String,System.Int32,System.Boolean,System.String,System.Boolean,System.String)">
+	<summary>
+ Places a Regular Order
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="SignalType">BUY|SELL|SHORT|COVER</param>
+	<param name="OrdType">MARKET|LIMIT|SL|SL-M</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="ProdType">MIS|CNC|NRML</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="Validity">DAY|IOC</param>
+	<param name="CTag">3-20 characters alphanumeric string to tag the order.</param>
+	<param name="DiscQty">Disclosed Quantity</param>
+	<param name="IsLive">True if want to Place Order in Trading account, False to just log</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.PlaceBOBridge(System.String,System.String,System.String,System.Int32,System.Double,System.Double,System.Double,System.Double,System.String,System.Double,System.String,System.Boolean,System.String,System.Boolean,System.String)">
+	<summary>
+ Places a BO Order
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="SignalType">BUY|SELL|SHORT|COVER</param>
+	<param name="OrdType">LIMIT|SL</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="SqOffValue">SqOffValue. Target Points</param>
+	<param name="StoplossValue">StoplossValue. Stoploss Points</param>
+	<param name="TrailingStoploss">TrailingStoploss. Minimum 20 Ticks. Put Zero if Trail Not required</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="CTag">3-20 characters alphanumeric string to tag the order.  </param>
+	<param name="IsLive">True if want to Place Order in Trading account, False to just log</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.PlaceCOBridge(System.String,System.String,System.String,System.Int32,System.Double,System.String,System.Double,System.String,System.Boolean,System.String,System.Boolean,System.String)">
+	<summary>
+ Places a CO Order
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="SignalType">BUY|SELL|SHORT|COVER</param>
+	<param name="OrdType">MARKET|LIMIT</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="StoplossPrice">StoplossPrice</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="CTag">3-20 characters alphanumeric string to tag the order.  </param>
+	<param name="IsLive">True if want to Place Order in Trading account, False to just log</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.PlaceAmoBridge(System.String,System.String,System.String,System.String,System.Int32,System.String,System.Double,System.Double,System.String,System.String,System.Int32,System.Boolean,System.String,System.Boolean,System.String)">
+	<summary>
+ Places a AMO Order
+ </summary>
+	<param name="Exch">NSE|NFO|MCX|CDS|BSE</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="SignalType">BUY|SELL|SHORT|COVER</param>
+	<param name="OrdType">MARKET|LIMIT|SL|SL-M</param>
+	<param name="Qty">Number of Lots in case of Futures. Number of shares in case of Equity</param>
+	<param name="ProdType">MIS|NRML|CNC</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="Validity">DAY|IOC</param>
+	<param name="CTag">3-20 characters alphanumeric string to tag the order.  </param>
+	<param name="DiscQty">Disclosed Quantity</param>
+	<param name="IsLive">True if want to Place Order in Trading account, False to just log</param>
+	<param name="StgyCode">StgyCode: Two characters alphanumeric string. Code 'MO' reserved for application use.</param>
+	<param name="IsAsync">true if want to process the request in background else false</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+	</remarks>
+</member><member name="P:KiteNet.AppUpdateEventArgs.EventCode">
+	<summary>
+ Get's the Event Code
+ </summary>
+	<value>EventCode</value>
+	<returns>EventCode</returns>
+	<remarks>
+		<br/>Event Code   -   Event Message
+ <br/>1 - User Logged-in
+ <br/>2 - User Logged-out
+ <br/>3 - Access Token Received
+ <br/>4 - Symbol Downloaded
+ <br/>5 - Network Disconnected
+ <br/>6 - Network Connected
+ <br/>7 - Webscoket Disconnected
+ <br/>8 - Websocket Connected
+ </remarks>
+</member><member name="P:KiteNet.AppUpdateEventArgs.EventMessage">
+	<summary>
+ Get's EventMessage
+ </summary>
+	<value>EventMessage</value>
+	<returns>EventMessage</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.AppUpdateEventArgs.#ctor(System.Int32,System.String)">
+	<summary>
+ Initializes a new instance of the AppUpdateEventArgs class with App Event details.
+ </summary>
+	<param name="iEventCode">EventCode</param>
+	<param name="sEventMessage">EventMessage</param>
+	<remarks>
+	</remarks>
+</member><member name="T:KiteNet.AppUpdateEventArgs">
+	<summary>
+ Event arguments for the AppUpdateEvent.
+ </summary>
+	<remarks>
+	</remarks>
+</member><member name="M:KiteNet.Bridge.SleepFor(System.Int32)">
+	<summary>
+ Pauses execution of code for specified milliseconds
+ </summary>
+	<param name="SleepTimeInMS">SleepTimeInMS</param>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.StringToDate(System.Object,System.String)">
+	<summary>
+ Converts String to Date
+ </summary>
+	<param name="ObjStringDate">ObjStringDate</param>
+	<param name="DateFormat">DateFormat</param>
+	<returns>Date</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.DateToString(System.DateTime,System.String)">
+	<summary>
+ Converts Date to String 
+ </summary>
+	<param name="DateTime">Date</param>
+	<param name="DateFormat">Format</param>
+	<returns>Formatted Date String</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetHighestHigh(System.String,System.Double,System.String,System.String)">
+	<summary>
+ Get's Highest High value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Highest High value</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetLowestLow(System.String,System.Double,System.String,System.String)">
+	<summary>
+ Get's Lowest Low
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Lowest Low Value</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPreviousValue(System.String,System.Double,System.String,System.String)">
+	<summary>
+ Get's Previous Value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Previous Value</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPriceChange(System.String,System.Double,System.String,System.String)">
+	<summary>
+ Get's Price Change
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Price Change</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPriceSide(System.String,System.Double,System.String,System.String)">
+	<summary>
+ Get's Price Side
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Price Side</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetCapturedPrice(System.String,System.Double,System.String,System.Boolean,System.String)">
+	<summary>
+ Get's Captured Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Value">Value</param>
+	<param name="Field">Field</param>
+	<param name="IsCapture">IsCapture</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Captured Price</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetHighestHigh(System.String,System.String,System.String)">
+	<summary>
+ Resets Highest High value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetLowestLow(System.String,System.String,System.String)">
+	<summary>
+ Resets lowest low value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetPreviousValue(System.String,System.String,System.String)">
+	<summary>
+ Resets Previous Value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetPriceChange(System.String,System.String,System.String)">
+	<summary>
+ Resets Price Change
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetPriceSide(System.String,System.String,System.String)">
+	<summary>
+ Resets Price side
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetCapturedPrice(System.String,System.String,System.String)">
+	<summary>
+ Resets Captured Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Field">Field</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.WriteLogFile(System.String,System.String,System.String)">
+	<summary>
+ Write logs to text file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<param name="StrMethod">StrMethod</param>
+	<param name="StrError">StrError</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.WriteMTMFile(System.String,System.String,System.Double,System.Double,System.String,System.Int32,System.Double,System.Double,System.String)">
+	<summary>
+ Writes MTM details to text file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="MTM">MTM</param>
+	<param name="Ltp">Ltp</param>
+	<param name="Trans">Trans</param>
+	<param name="Qty">Qty</param>
+	<param name="EntryPrice">EntryPrice</param>
+	<param name="ExitPrice">ExitPrice</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.CreateFolder(System.String)">
+	<summary>
+ Creates folder
+ </summary>
+	<param name="FolderPath">FolderPath</param>
+	<returns>true on success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.IsFolderExists(System.String)">
+	<summary>
+ Checks for folder
+ </summary>
+	<param name="FolderPath">FolderPath</param>
+	<returns>true if exists else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.IsFileExists(System.String)">
+	<summary>
+ Checks for file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<returns>true if exists else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.SplitString(System.String,System.String,System.Int32)">
+	<summary>
+ Splits a String with the seperator passed
+ </summary>
+	<param name="SplitStr">SplitStr</param>
+	<param name="Seperator">Seperator</param>
+	<param name="Index">Index</param>
+	<returns>String</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.DeleteFile(System.String)">
+	<summary>
+ Deletes a file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.DeleteFolder(System.String)">
+	<summary>
+ Deletes a folder
+ </summary>
+	<param name="FolderPath">FolderPath</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.EmptyFolder(System.String)">
+	<summary>
+ Deletes the content of the folder
+ </summary>
+	<param name="FolderPath">FolderPath</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.IsInternetAvailable">
+	<summary>
+ Checks for Network connection
+ </summary>
+	<returns>true if available else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.CountString(System.String,System.String)">
+	<summary>
+ Counts the number of occurences of a string in another string
+ </summary>
+	<param name="Str">Str</param>
+	<param name="StrFind">StrFind</param>
+	<returns>number of occurences of a string</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetFileSize(System.String)">
+	<summary>
+ Get's the file size
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<returns>file size</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.UnixTimeToDate(System.String)">
+	<summary>
+ Converts Timestamp to date
+ </summary>
+	<param name="UnixTime">UnixTime</param>
+	<returns>Date</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.DateToUnixTime(System.DateTime,System.Boolean)">
+	<summary>
+ Converts Date to Unix Timestamp
+ </summary>
+	<param name="NormalDate">NormalDate</param>
+	<param name="ConvertInMilli">ConvertInMilli</param>
+	<returns>UnixTimeStamp</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.WriteTextFile(System.String,System.String,System.Boolean)">
+	<summary>
+ Writes string to text file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<param name="StrLine">StrLine</param>
+	<param name="IsAppend">IsAppend</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetTextFileContent(System.String)">
+	<summary>
+ Get's the content of the text file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<returns>Text file content</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetTextFileContentEx(System.String,System.Int32,System.Boolean,System.Boolean)">
+	<summary>
+ Get's the contents of the text file
+ </summary>
+	<param name="FilePath">FilePath</param>
+	<param name="LinesToRead">LinesToRead</param>
+	<param name="IgnoreHeader">IgnoreHeader</param>
+	<param name="ReverseOrder">ReverseOrder</param>
+	<returns>contents of the text file</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetTrailMTM(System.String,System.Double,System.Double,System.String)">
+	<summary>
+ Get's trail MTM
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="MTM">MTM</param>
+	<param name="BaseMTM">BaseMTM</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Trail MTM</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetTrailMTM(System.String,System.String)">
+	<summary>
+ Resets Trail MTM
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetSellTrailPrice(System.String,System.Double,System.Double,System.Double,System.Double,System.String)">
+	<summary>
+ Get's Sell Trail Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="EntryPrice">EntryPrice</param>
+	<param name="TrailPoints">TrailPoints</param>
+	<param name="Initial_Sl">Initial_Sl</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Trail Price</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetSellTrailPrice(System.String,System.String)">
+	<summary>
+ Resets the Sell Trail Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetBuyTrailPrice(System.String,System.Double,System.Double,System.Double,System.Double,System.String)">
+	<summary>
+ Get's Buy Trail Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="EntryPrice">EntryPrice</param>
+	<param name="TrailPoints">TrailPoints</param>
+	<param name="Initial_Sl">Initial_Sl</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>Trail Price</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetBuyTrailPrice(System.String,System.String)">
+	<summary>
+ Resets Buy Trail Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetShortTrigger(System.String,System.Double,System.Double,System.Boolean,System.Int32,System.Int32,System.Boolean,System.String,System.Int32)">
+	<summary>
+ Get's the Short Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TrgPrice">TrgPrice</param>
+	<param name="IsTrdTime">IsTrdTime</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="Qty">Qty</param>
+	<param name="IsCrossFromAbove">IsCrossFromAbove</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<returns>SHORT if conditions fulfilled else NOSHORT</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetCoverTrigger(System.String,System.Double,System.Double,System.Double,System.Boolean,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Get's Cover trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TgtPrice">TgtPrice</param>
+	<param name="SlPrice">SlPrice</param>
+	<param name="IsSqOffTime">IsSqOffTime</param>
+	<param name="Qty">Qty</param>
+	<param name="Mtm">Mtm</param>
+	<param name="MtmAll">MtmAll</param>
+	<param name="MaxProfit">MaxProfit</param>
+	<param name="MaxLoss">MaxLoss</param>
+	<param name="MaxProfitAll">MaxProfitAll</param>
+	<param name="MaxLossAll">MaxLossAll</param>
+	<param name="StopOnTgtHit">StopOnTgtHit</param>
+	<param name="StopOnSlHit">StopOnSlHit</param>
+	<param name="IsBuy">IsBuy</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>COVER if conditions fulfilled else NBOVER</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetBuyTrigger(System.String,System.Double,System.Double,System.Boolean,System.Int32,System.Int32,System.Boolean,System.String,System.Int32)">
+	<summary>
+ Get's Buy Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TrgPrice">TrgPrice</param>
+	<param name="IsTrdTime">IsTrdTime</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="Qty">Qty</param>
+	<param name="IsCrossFromBelow">IsCrossFromBelow</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<returns>BUY if conditions fulfilled else NOBUY</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetSellTrigger(System.String,System.Double,System.Double,System.Double,System.Boolean,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Get's Sell trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TgtPrice">TgtPrice</param>
+	<param name="SlPrice">SlPrice</param>
+	<param name="IsSqOffTime">IsSqOffTime</param>
+	<param name="Qty">Qty</param>
+	<param name="Mtm">Mtm</param>
+	<param name="MtmAll">MtmAll</param>
+	<param name="MaxProfit">MaxProfit</param>
+	<param name="MaxLoss">MaxLoss</param>
+	<param name="MaxProfitAll">MaxProfitAll</param>
+	<param name="MaxLossAll">MaxLossAll</param>
+	<param name="StopOnTgtHit">StopOnTgtHit</param>
+	<param name="StopOnSlHit">StopOnSlHit</param>
+	<param name="IsShort">IsShort</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>SELL if conditions fulfilled else NOSELL</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetBuySellShortCoverTriggers(System.String,System.String)">
+	<summary>
+ Resets Buy/Sell/Short/Cover triggers
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayTradedQty(System.String)">
+	<summary>
+ Get's Previous Day Traded Qty
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Traded Qty</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayTradedValue(System.String)">
+	<summary>
+ Get's Previous Day Traded Value
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Traded Value</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayOpen(System.String)">
+	<summary>
+ Get's Previous Day Open
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Open</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayHigh(System.String)">
+	<summary>
+ Get's Previous Day High
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day High</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayLow(System.String)">
+	<summary>
+ Get's Previous Day Low
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Low</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayClose(System.String)">
+	<summary>
+ Get's Previous Day Close
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Close</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayLtp(System.String)">
+	<summary>
+ Get's Previous Day Ltp
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Ltp</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgVolume(System.String)">
+	<summary>
+ Get's Avg Volume
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Avg Volume</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgRange(System.String)">
+	<summary>
+ Get's Avg Range
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Avg Range</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetDailyVolatility(System.String)">
+	<summary>
+ Get's Daily Volatility
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Daily Volatility</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetAnnualVolatility(System.String)">
+	<summary>
+ Get's Annual Volatility
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Annual Volatility</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayTradedContract(System.String)">
+	<summary>
+ Get's Previous day Traded Contract
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous day Traded Contract</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayOI(System.String)">
+	<summary>
+ Get's Previous Day OI
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day OI</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDayOIChange(System.String)">
+	<summary>
+ Get's Previous Day OI Change
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day OI Change</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetPrevDaySettlePrice(System.String)">
+	<summary>
+ Get's Previous Day Settle Price
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<returns>Previous Day Settle Price</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateBuyTrigger(System.String,System.Boolean,System.Int32,System.Int32,System.String)">
+	<summary>
+ Validates a Buy Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsBuy">IsBuy</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateShortTrigger(System.String,System.Boolean,System.Int32,System.Int32,System.String)">
+	<summary>
+ Validates a Short Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsShort">IsShort</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateCoverTrigger(System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Validates a Cover Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsCover">IsCover</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateSellTrigger(System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ validates a Sell Trigger
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsSell">IsSell</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetShortSignal(System.String,System.Double,System.Double,System.Boolean,System.Int32,System.Int32,System.Boolean,System.String,System.Int32)">
+	<summary>
+ Get's Short Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TrgPrice">TrgPrice</param>
+	<param name="IsTrdTime">IsTrdTime</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="Qty">Qty</param>
+	<param name="IsCrossFromAbove">IsCrossFromAbove</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<returns>SHORT if conditions fulfilled else NOSHORT</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetCoverSignal(System.String,System.Double,System.Double,System.Double,System.Boolean,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Get's Cover Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TgtPrice">TgtPrice</param>
+	<param name="SlPrice">SlPrice</param>
+	<param name="IsSqOffTime">IsSqOffTime</param>
+	<param name="Qty">Qty</param>
+	<param name="Mtm">Mtm</param>
+	<param name="MtmAll">MtmAll</param>
+	<param name="MaxProfit">MaxProfit</param>
+	<param name="MaxLoss">MaxLoss</param>
+	<param name="MaxProfitAll">MaxProfitAll</param>
+	<param name="MaxLossAll">MaxLossAll</param>
+	<param name="StopOnTgtHit">StopOnTgtHit</param>
+	<param name="StopOnSlHit">StopOnSlHit</param>
+	<param name="IsBuy">IsBuy</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>COVER if conditions fulfilled else NBOVER</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetBuySignal(System.String,System.Double,System.Double,System.Boolean,System.Int32,System.Int32,System.Boolean,System.String,System.Int32)">
+	<summary>
+ Get's Buy Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TrgPrice">TrgPrice</param>
+	<param name="IsTrdTime">IsTrdTime</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="Qty">Qty</param>
+	<param name="IsCrossFromBelow">IsCrossFromBelow</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<returns>BUY if conditions fulfilled else NOBUY</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.GetSellSignal(System.String,System.Double,System.Double,System.Double,System.Boolean,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Get's Sell Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="Ltp">Ltp</param>
+	<param name="TgtPrice">TgtPrice</param>
+	<param name="SlPrice">SlPrice</param>
+	<param name="IsSqOffTime">IsSqOffTime</param>
+	<param name="Qty">Qty</param>
+	<param name="Mtm">Mtm</param>
+	<param name="MtmAll">MtmAll</param>
+	<param name="MaxProfit">MaxProfit</param>
+	<param name="MaxLoss">MaxLoss</param>
+	<param name="MaxProfitAll">MaxProfitAll</param>
+	<param name="MaxLossAll">MaxLossAll</param>
+	<param name="StopOnTgtHit">StopOnTgtHit</param>
+	<param name="StopOnSlHit">StopOnSlHit</param>
+	<param name="IsShort">IsShort</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>SELL if conditions fulfilled else NOSELL</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ResetBuySellShortCoverSignals(System.String,System.String)">
+	<summary>
+ Resets Buy/Sell/Short/Cover signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateBuySignal(System.String,System.Boolean,System.Int32,System.Int32,System.String)">
+	<summary>
+ Validates a Buy Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsBuy">IsBuy</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateShortSignal(System.String,System.Boolean,System.Int32,System.Int32,System.String)">
+	<summary>
+ Validates a Short Signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsShort">IsShort</param>
+	<param name="MaxEntry">MaxEntry</param>
+	<param name="MaxPositions">MaxPositions</param>
+	<param name="StgyCode">StgyCode</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateCoverSignal(System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Validates a Cover signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsCover">IsCover</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.ValidateSellSignal(System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+ Validates a Sell signal
+ </summary>
+	<param name="TrdSym">TrdSym</param>
+	<param name="IsSell">IsSell</param>
+	<param name="StgyCode">StgyCode</param>
+	<param name="ResetMaxPositions">ResetMaxPositions</param>
+	<returns>true if validation is success else false</returns>
+	<remarks></remarks>
+</member><member name="M:KiteNet.Bridge.SendMail(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Boolean,System.Boolean)">
+	<summary>
+ A simple Email Client
+ </summary>
+	<param name="UserName">UserName i.e. Your Email Address</param>
+	<param name="Password">Password</param>
+	<param name="FromEmail">FromEmail. Same as user name</param>
+	<param name="FromName">FromName</param>
+	<param name="ToEmail">ToEmail</param>
+	<param name="ToName">ToName</param>
+	<param name="Subject">Subject</param>
+	<param name="Body">Body</param>
+	<param name="SmtpHost">SmtpHost</param>
+	<param name="SmtpPort">SmtpPort</param>
+	<param name="EnableSsl">EnableSsl</param>
+	<param name="IsBodyHtml">IsBodyHtml</param>
+	<remarks>
+ If you are gmail user, make sure you enabled Allow Less Secure app in Google a/c
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetLongTradesBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's number of Long trades placed (Long Entry)
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Long Trades Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetShortTradesBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's number of Short trades placed (Short Entry)
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Short Trades Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalTradesBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's total trades placed (Long+Sell+Short+Cover)
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Total Trades Placed</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetEntryTradesBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's number of entry trades placed (Long+Short)
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Entry Trades Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgBoughtPriceBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's Avg Bought Price for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Avg Bought Price</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetAvgSoldPriceBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's Avg Sold Price for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Avg Sold Price</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetMtmBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's MTM for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>MTM</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetBoughtQtyBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's Bought Qty for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Bought Qty</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetSoldQtyBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's Sold Qty for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Sold Qty</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetNetQtyBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's NetQty for the trade symbol and StgyCode passed
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Net Qty</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetOrderIdsBridge(System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ Get's list of order ids for the trade symbol and StgyCode passed 
+ </summary>
+	<param name="Exch">Exch</param>
+	<param name="TrdSym">TrdSym</param>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Order Id list as Csv</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalMtmBridge(System.String,System.String,System.Boolean)">
+	<summary>
+ Get's total MTM for the StgyCode passed
+ </summary>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Total MTM</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetOpenPositionsBridge(System.String,System.String,System.Boolean)">
+	<summary>
+ Get's number of Open positions for the StgyCode passed
+ </summary>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Open Positions Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetClosedPositionsBridge(System.String,System.String,System.Boolean)">
+	<summary>
+ Get's number of Closed positions for the StgyCode passed
+ </summary>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Closed Positions Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetTotalPositionsBridge(System.String,System.String,System.Boolean)">
+	<summary>
+ Get's total number of positions for the StgyCode passed
+ </summary>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Total Positions Count</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Bridge.GetPositionsListBridge(System.String,System.String,System.Boolean)">
+	<summary>
+ Get's list of positions for the StgyCode passed
+ </summary>
+	<param name="StgyCode">StgyCode. Two chracters alphanumeric string which uniquely identifies the strategy. Code 'MO' reserved for application use.</param>
+	<param name="Source">XLBRIDGE | AMIBRIDGE | WINBRIDGE</param>
+	<param name="IsLive">true if order is placed live else false for paper trading</param>
+	<returns>Position List</returns>
+	<remarks>
+ Source:
+ <br/>Order placed from Excel:  XLBRIDGE
+ <br/>Order placed from AmiBroker:  AMIBRIDGE
+ <br/>Order placed from Any other Windows Application:  WINBRIDGE
+ </remarks>
+</member><member name="M:KiteNet.Kite.PlaceBO(System.String,System.String,System.String,System.Int32,System.Double,System.Double,System.Double,System.Double,System.String,System.Double,System.String,System.String)">
+	<summary>
+ Places a BO order
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Trans">BUY or SELL</param>
+	<param name="Qty">Quantity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="SqOffValue">SqOff Value</param>
+	<param name="StoplossValue">Stoploss Value</param>
+	<param name="CTag">Custom tag</param>
+	<param name="TrailingStoploss">Trail Value</param>
+	<param name="OrdType">Order Type LIMIT or SL</param>
+	<param name="TrgPrice">Trigger Price incase of SL Order Type</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+ String parameters are case-insensitive.
+ <br/>Custom Tag should be unique, alphanumeric and 3-20 chracters long.
+ <br/>Custom tag is assigned and manupulated locally by KiteNet.
+ <br/>Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ <br/>Prices are automatically rounded to tick size by KiteNet.
+ <br/>Exchange and Trade Symbol should exactly match with Master Contract.
+ <br/>Validity, Product and Order Type should match exactly as per API documenation.
+ <br/>Call this function Try...Catch...End Try block to catch exceptions.
+ </remarks>
+</member><member name="M:KiteNet.Kite.ExitBO(System.String)">
+	<summary>
+ Exits a open BO position
+ </summary>
+	<param name="OrderIdTgtSl">OrderId of BO stoploss or Target</param>
+	<returns>Status</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.CancelBOMain(System.String)">
+	<summary>
+ Cancels a open BO entry order 
+ </summary>
+	<param name="OrderIdEntry">Order Id of BO entry</param>
+	<returns>Status</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ModifyBOMain(System.String,System.Int32,System.Double,System.Double)">
+	<summary>
+ Modifies a open BO entry order
+ </summary>
+	<param name="OrderIdEntry">Order Id of BO entry</param>
+	<param name="Qty">Quantity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<returns>Order Id</returns>
+	<remarks>
+ Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ </remarks>
+</member><member name="M:KiteNet.Kite.ModifyBOTgt(System.String,System.Double)">
+	<summary>
+ Modifies a open BO target order
+ </summary>
+	<param name="OrderIdTarget">Order Id of BO target</param>
+	<param name="LmtPrice">Limit Price</param>
+	<returns>Order Id</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.ModifyBOSl(System.String,System.Double)">
+	<summary>
+ Modifies a open BO stoploss order
+ </summary>
+	<param name="OrderIdStoploss">Order Id of BO stoploss</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<returns>Order Id</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.PlaceRegularOrder(System.String,System.String,System.String,System.String,System.Int32,System.String,System.Double,System.Double,System.String,System.String,System.Int32,System.String)">
+	<summary>
+ Places a Regular Order
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<param name="Trans">BUY or SELL</param>
+	<param name="OrdType">MARKET or LIMIT or SL or SL-M</param>
+	<param name="Qty">Quantity</param>
+	<param name="ProdType">MIS OR NRML OR CNC</param>
+	<param name="DiscQty">DiscQty</param>
+	<param name="CTag">Custom Tag</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="Validity">DAY or IOC</param>
+	<param name="TagAPI">API supported Tag. 2-8 characters and alphanumeric</param>
+	<returns>Order Id</returns>
+	<remarks>
+ String parameters are case-insensitive.
+ <br/>Custom Tag should be unique, alphanumeric and 3-20 chracters long.
+ <br/>Custom tag is assigned and manupulated locally by KiteNet.
+ <br/>Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ <br/>Prices are automatically rounded to tick size by KiteNet.
+ <br/>Exchange and Trade Symbol should exactly match with Master Contract.
+ <br/>Validity, Product and Order Type should match exactly as per API documenation.
+ <br/>Call this function Try...Catch...End Try block to catch exceptions.
+ </remarks>
+</member><member name="M:KiteNet.Kite.ModifyRegularOrder(System.String,System.String,System.Int32,System.Double,System.Double,System.Int32)">
+	<summary>
+ Modifies a open or trigger pending simple order
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<param name="OrdType">MARKET or LIMIT or SL or SL-M</param>
+	<param name="Qty">Quantity</param>
+	<param name="LmtPrice">Limit Price</param>
+	<param name="TrgPrice">Trigger Price</param>
+	<param name="DiscQty">DiscQty</param>
+	<returns>Order Id</returns>
+	<remarks>
+ Quantity: For EQUITY- Number of shares to Buy/Sell. For FNO- Number of lots to Buy/Sell.
+ </remarks>
+</member><member name="M:KiteNet.Kite.CancelRegularOrder(System.String)">
+	<summary>
+ Cancels a open or trigger pending simple order
+ </summary>
+	<param name="OrderId">Order Id</param>
+	<returns>Status</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.CheckOrderExecutionLatency(System.String,System.String)">
+	<summary>
+ Checks for order execution latency
+ </summary>
+	<param name="Exch">Exchange</param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>
+ Number of milliseconds taken to place a sample order
+ </returns>
+	<remarks>
+ This function places a real order with limit price as 1, so that the order will be rejected by OMS for lower circuit break.
+ <br/>Returns number of milliseconds taken for round trip i.e. KiteNet--&gt;OMS--&gt;KiteNet.
+ </remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.InstToken">
+	<summary>
+ Get's the Inst token
+ </summary>
+	<value>Inst token</value>
+	<returns>Inst token</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.Exch">
+	<summary>
+ Get's the exchange
+ </summary>
+	<value>exchange</value>
+	<returns>exchange</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.TrdSym">
+	<summary>
+ Get's the trade_symbol
+ </summary>
+	<value>trade_symbol</value>
+	<returns>trade_symbol</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.AvgBoughtPrice">
+	<summary>
+ Get's the AvgBoughtPrice
+ </summary>
+	<value>AvgBoughtPrice</value>
+	<returns>AvgBoughtPrice</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.AvgSoldPrice">
+	<summary>
+ Get's the AvgSoldPrice
+ </summary>
+	<value>AvgSoldPrice</value>
+	<returns>AvgSoldPrice</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.BoughtQty">
+	<summary>
+ Get's the BoughtQty
+ </summary>
+	<value>BoughtQty</value>
+	<returns>BoughtQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.SoldQty">
+	<summary>
+ Get's the SoldQty
+ </summary>
+	<value>SoldQty</value>
+	<returns>SoldQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.MTM">
+	<summary>
+ Get's the MTM
+ </summary>
+	<value>MTM</value>
+	<returns>MTM</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.NetQty">
+	<summary>
+ Get's the NetQty
+ </summary>
+	<value>NetQty</value>
+	<returns>NetQty</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.Ltp">
+	<summary>
+ Get's the Ltp
+ </summary>
+	<value>Ltp</value>
+	<returns>Ltp</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.Bid">
+	<summary>
+ Get's the BestBid
+ </summary>
+	<value>Bid</value>
+	<returns>Bid</returns>
+	<remarks>None</remarks>
+</member><member name="P:KiteNet.PositionUpdateEventArgs.Ask">
+	<summary>
+ Get's the BestAsk
+ </summary>
+	<value>Ask</value>
+	<returns>Ask</returns>
+	<remarks>None</remarks>
+</member><member name="M:KiteNet.PositionUpdateEventArgs.#ctor(System.String,System.String,System.String,System.Double,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Double,System.Double,System.Double)">
+	<summary>
+ Initializes a new instance of the PositionUpdateEventArgs class with Position details.
+ </summary>
+	<param name="sExch">Exch</param>
+	<param name="sInstToken">Inst Token</param>
+	<param name="sTrdSym">Trade Symbol</param>
+	<param name="dAvgBoughtPrice">Avg Bought Price</param>
+	<param name="dAvgSoldPrice">Avg Sold Price</param>
+	<param name="iBoughtQty">Bought Qty</param>
+	<param name="iSoldQty">Sold Qty</param>
+	<param name="dMTM">Net PL</param>
+	<param name="iNetQty">Net Qty</param>
+	<param name="dLtp">Ltp</param>
+	<param name="dBid">Bid</param>
+	<param name="dAsk">Ask</param>
+	<remarks>None</remarks>
+</member><member name="T:KiteNet.PositionUpdateEventArgs">
+	<summary>
+ Event arguments for the PositionUpdateEvent.
+ </summary>
+	<remarks>
+ API server does not stream position details in websocket. This data is internally calculated by KiteNet Library using the order details received through websocket/order book.
+ </remarks>
+</member><member name="M:KiteNet.Kite.GetMWSymbols">
+	<summary>
+ Returns the list of symbols added to market watch
+ </summary>
+	<returns>CSV Market watch</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetExch(System.String)">
+	<summary>
+ Returns the Exchange for the given InstToken
+ </summary>
+	<param name="InstToken">Inst Token</param>
+	<returns>Exchange</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetTrdSym(System.String)">
+	<summary>
+ Returns the Trade Symbol for the given Token
+ </summary>
+	<param name="InstToken">Inst Token</param>
+	<returns>Trade Symbol</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetLotSize(System.String,System.String)">
+	<summary>
+ Get's the Lot Size
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Lot Size</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetTickSize(System.String,System.String)">
+	<summary>
+ Get's Tick Size
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Tick Size</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetStrike(System.String,System.String)">
+	<summary>
+ Get's Strike price
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Strike</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetExpiry(System.String,System.String)">
+	<summary>
+ Get's Expiry
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Expiry</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetISIN(System.String,System.String)">
+	<summary>
+ Get's ISIN
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>ISIN</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetExchToken(System.String,System.String)">
+	<summary>
+ Get's Exch Token
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Exch Token</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetInstToken(System.String,System.String)">
+	<summary>
+ Get's Inst Token
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Token</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetSegment(System.String,System.String)">
+	<summary>
+ Get's Segment
+ </summary>
+	<param name="Exch">Exchange </param>
+	<param name="TrdSym">Trade Symbol</param>
+	<returns>Segment</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.GetSymbols(System.String)">
+	<summary>
+ Get's Symbol list
+ </summary>
+	<param name="Exch">Exchange</param>
+	<returns>Returns string with comma seperated values</returns>
+	<remarks> None</remarks>
+</member><member name="M:KiteNet.Kite.Login">
+	<summary>
+ Opens built-in WebBrowser control for login flow and retrieves the access code on succesful login.
+ </summary>
+	<example>
+ Imports KiteNet
+ <br/>Dim Kite as Kite = New Kite
+ <br/>
+		<br/>Kite.Api_Key = "xdefvsj455xxxx"
+ <br/>Kite.Api_Secret = "sghhyrteyens"
+ <br/>
+		<br/>Try
+ <br/>Kite.Login()
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+	</example>
+	<returns>True or False</returns>
+	<remarks>Request_Token Property is automatically set on successful login.
+ <br/> If you are behind proxy, then try manual login using chrome or any modern web browsers.
+ </remarks>
+</member><member name="M:KiteNet.Kite.Login(System.String)">
+	<summary>
+ Opens user choosen browser for login flow.
+ </summary>
+	<param name="BrowserName">chrome|firefox|default</param>
+	<example>
+ Imports KitetNet
+ <br/>Dim Kite as Kite = New Kite
+ <br/>
+		<br/>Kite.Api_Key = "xdefvsj455xxxx"
+ <br/>Kite.Api_Secret = "sghhyrteyens"
+ <br/>
+		<br/>Try
+ <br/> Kite.Login("chrome")
+ <br/>Catch Ex as Exception
+ <br/>'ToDo Add Any Exception Handling Procedures
+ <br/>End Try
+ <br/>
+	</example>
+	<returns>True or False</returns>
+	<remarks>Copy the access code from browser address bar manually on succesful login and pass it to GetAccessToken method.</remarks>
+</member><member name="T:KiteNet.Mode">
+	<summary>
+ Enum for Subscribe Quotes
+ <br/>ltp = 1
+ <br/>quote = 2
+ <br/>full = 3
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

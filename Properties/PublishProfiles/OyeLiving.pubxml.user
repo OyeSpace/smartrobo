@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\API_WS\Demo</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Data/SampleDB.mdf">
+      <publishTime>11/29/2018 10:18:02</publishTime>
+    </File>
+    <File Include="App_Data/SampleDB_log.ldf">
+      <publishTime>11/29/2018 10:18:02</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>11/22/2018 10:37:58</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>11/22/2018 10:37:58</publishTime>
+    </File>
+    <File Include="bin/ChampService.dll">
+      <publishTime>01/08/2019 19:28:50</publishTime>
+    </File>
+    <File Include="bin/ChampService.pdb">
+      <publishTime>01/08/2019 19:28:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>11/22/2018 10:41:18</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>11/22/2018 10:41:30</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>11/22/2018 10:39:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>11/22/2018 10:39:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>11/22/2018 10:40:32</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>11/22/2018 10:40:02</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>11/22/2018 10:39:48</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Tracing.dll">
+      <publishTime>11/22/2018 10:40:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>11/22/2018 10:40:28</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>11/22/2018 10:39:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>11/22/2018 10:39:24</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>11/22/2018 10:39:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>11/22/2018 10:40:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>11/22/2018 10:40:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>11/22/2018 10:40:36</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>11/22/2018 10:41:52</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>11/22/2018 10:31:08</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>11/22/2018 10:31:08</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>11/22/2018 10:31:10</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+      <publishTime>11/22/2018 10:31:32</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+      <publishTime>11/22/2018 10:31:32</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>11/22/2018 10:31:32</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+      <publishTime>11/22/2018 10:31:32</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>11/22/2018 10:30:18</publishTime>
+    </File>
+    <File Include="Resources/error_catalog.json">
+      <publishTime>11/22/2018 10:31:50</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>11/22/2018 10:31:50</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>11/22/2018 10:31:50</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+      <publishTime>11/22/2018 10:31:50</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.map">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>11/22/2018 10:31:52</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Templates/receipt.html">
+      <publishTime>01/08/2019 18:49:43</publishTime>
+    </File>
+    <File Include="Views/GetCredentials.html">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Views/web.config">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>11/22/2018 10:31:54</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>01/08/2019 19:35:13</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
