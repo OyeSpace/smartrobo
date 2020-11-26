@@ -1,6 +1,7 @@
 ﻿using ChampService.DataAccess;
 using ChampService.FunObjects;
 using ChampService.Models;
+using ChampService.TrueData;
 using ChampService.Utils;
 using KiteConnect;
 using nimbleStream.DataStream;
@@ -14,6 +15,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.UI.DataVisualization.Charting;
@@ -78,18 +80,21 @@ namespace Trading.Controllers
                 ApiObject.InitClient();
             }
 
+
             ApiObject.ApplyFunctionAsync(client, fun);
 
+           
 
 
             // return SendMessageResponse(HttpStatusCode.OK, new APIFailureResponseMessage<ErrorResponse>(null));
         }
         [HttpGet]
-        [Route("v1/RequestToken/{RequestToken}")]
-        [Route("RequestToken/{RequestToken}")]
+        [Route("v1/SetToken/{RequestToken}")]
+        [Route("SetToken/{RequestToken}")]
         public HttpResponseMessage RequestToken(string RequestToken)
         {
            
+
             string myAPIKey = "m49ujqztaounoep5";
 
             Kite kite = new Kite(myAPIKey);
@@ -112,62 +117,47 @@ namespace Trading.Controllers
         [HttpGet]
         [Route("v1/PlaceOrder/{Token}")]
         [Route("PlaceOrder/{Token}")]
-        public void PlaceOrder(string token)
+        public async Task<bool> PlaceOrder(string token)
         {
 
-            string myAPIKey = "m49ujqztaounoep5";
+            ApiObject.InitClient();
 
-            Kite kite = new Kite(myAPIKey);
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromSeconds(1);
 
-            //var url = kite.GetLoginURL();
-
-            //  ivr = new ivr { associationID = associationId, visitorLogId = visitorLogId, status = typeOfVisit + " Approved", environment = env };
-
-            //'Intraday orders(MIS) are allowed only till 3.20 PM. Try placing a CNC order
-
-            kite.SetAccessToken(token);
-            try
+            var timer = new System.Threading.Timer((e) =>
             {
-              //  Ticker ticker = new Ticker(myAPIKey, token);
+                GetLastTradePrice();
+            }, null, startTimeSpan, periodTimeSpan);
 
-              //  // Add handlers to events
-              //  ticker.OnTick += onTick;
-              //  ticker.OnOrderUpdate += OnOrderUpdate;
-              //  //ticker.OnReconnect += onReconnect;
-              //  //ticker.OnNoReconnect += oNoReconnect;
-              //  //ticker.OnError += onError;
-              //  //ticker.OnClose += onClose;
-              //  //ticker.OnConnect += onConnect;
+            //// TrueObjects.InitializeComponent();
+            //string myAPIKey = "m49ujqztaounoep5";
+            //Kite kite = new Kite(myAPIKey);
+            //kite.SetAccessToken(token);
 
-              //  // Engage reconnection mechanism and connect to ticker
-              //  ticker.EnableReconnect(Interval: 5, Retries: 50);
-              //  ticker.Connect();
-               
-              //  // Disconnect ticker before closing the application
-              ////  ticker.Close();
+            //var startTimeSpan = TimeSpan.Zero;
+            //var periodTimeSpan = TimeSpan.FromMilliseconds(1);
 
-              //  // Subscribing to NIFTY50 and setting mode to LTP
-              //  ticker.Subscribe(Tokens: new UInt32[] { 11667970 });
-              //  ticker.SetMode(Tokens: new UInt32[] { 11667970 }, Mode: Constants.MODE_LTP);
+            //var timer = new System.Threading.Timer((e) =>
+            //{
+            //    GetLastTradePrice();
+            //}, null, startTimeSpan, periodTimeSpan);
 
-               
+            //try
+            //{
 
-                var order_id = kite.PlaceOrder("NSE", "ACC", "BUY", 1, 0, "MIS", "MARKET");
+            //    //   var order_id = kite.PlaceOrder("NSE", "ACC", "BUY", 1, 0, "MIS", "MARKET");
 
-               // kite.GetOrders();
-
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e.Message);
-            }
-            //OrderDetails orders = new OrderDetails();
-
-            //orders = new OrderDetails { Exchange = "NSE", TradingSymbol = "INFY", TransactionType = "BUY", Quantity = 1, Price = 2, Product = "MIS", OrderType = "MARKET" };
+            //    //   Request.CreateResponse(order_id);
 
 
-            //Trace.WriteLine("OrderID " + orders);
+            //}
+            //catch (Exception e)
+            //{
+            //    Trace.WriteLine(e.Message);
+            //}
 
+            return true;
 
         }
 
@@ -214,6 +204,58 @@ namespace Trading.Controllers
         {
         
         }
+
+
+
+
+        public  async Task<bool> GetLastTradePrice()
+        {
+            ApiObject.ApplyFunctionAsync(client, "GetLastQuote");
+            ApiObject.InitClient();
+            return true;
+       }
+
+
+
+
+
+
+
+        //var startTimeSpan = TimeSpan.Zero;
+        //var periodTimeSpan = TimeSpan.FromSeconds(1);
+
+        //var timer = new System.Threading.Timer((e) =>
+        //{
+        //    MyMethod();
+        //}, null, startTimeSpan, periodTimeSpan);
+
+
+
+
+        //  Ticker ticker = new Ticker(myAPIKey, token);
+
+        //  // Add handlers to events
+        //  ticker.OnTick += onTick;
+        //  ticker.OnOrderUpdate += OnOrderUpdate;
+        //  //ticker.OnReconnect += onReconnect;
+        //  //ticker.OnNoReconnect += oNoReconnect;
+        //  //ticker.OnError += onError;
+        //  //ticker.OnClose += onClose;
+        //  //ticker.OnConnect += onConnect;
+
+        //  // Engage reconnection mechanism and connect to ticker
+        //  ticker.EnableReconnect(Interval: 5, Retries: 50);
+        //  ticker.Connect();
+
+        //  // Disconnect ticker before closing the application
+        ////  ticker.Close();
+
+        //  // Subscribing to NIFTY50 and setting mode to LTP
+        //  ticker.Subscribe(Tokens: new UInt32[] { 11667970 });
+        //  ticker.SetMode(Tokens: new UInt32[] { 11667970 }, Mode: Constants.MODE_LTP);
+
+        //   working - var order_id = kite.PlaceOrder("NSE", "ACC", "BUY", 1, 0, "MIS", "MARKET");
+        // symbol(INFY)year(19)month(OCT)strike(650)type(CE / PE).
     }
 
 }

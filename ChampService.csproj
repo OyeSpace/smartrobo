@@ -264,6 +264,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChampAPIResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TrueData\TrueObjects.cs" />
     <Compile Include="Utils\APIResponseMessage.cs" />
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\DecimalToWord.cs" />

@@ -169,6 +169,16 @@ namespace ChampService.DataAccess
         {
           
         }
+
+
+        public static void InsertTickData(double price)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("INSERT INTO TickData (PriceVal, DateCreated) ");
+            sb.AppendFormat("VALUES('{0}','{1}')",price,DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.ff"));
+            AccountReader reader = new AccountReader(sb.ToString());
+            reader.ExecuteNonQuery();
+        }
     }
 
 }
